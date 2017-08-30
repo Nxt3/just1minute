@@ -70,10 +70,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         //Tick parameters
         //used as the starting point for drawing the ticks
-        private final float TICK_STROKE = 7f;
+//        private final float TICK_STROKE = 7f;
         private final float AMBIENT_STROKE = 2f;
-        private final float TICK_TOP_WIDTH = 3f;
-        private final float TICK_BOTTOM_WIDTH = 2;
+        private final float TICK_TOP_WIDTH = 4f;
+        private final float TICK_BOTTOM_WIDTH = 3f;
         private final float TICK_OFFSET = 12f;
         private final float TICK_LENGTH = 47f;
 
@@ -133,7 +133,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         //Fonts
         private final Typeface mAmbientFont
-                = Typeface.create("sans-serif-light", Typeface.NORMAL);
+                = Typeface.create("sans-serif-thin", Typeface.NORMAL);
         private Typeface mMinuteTextFont;
 //                = Typeface.create("sans-serif-medium", Typeface.NORMAL);
 
@@ -201,7 +201,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mHourTickPaint.setStyle(Paint.Style.FILL);
             mHourTickPaint.setStrokeJoin(Paint.Join.MITER);
             mHourTickPaint.setStrokeCap(Paint.Cap.SQUARE);
-            mHourTickPaint.setStrokeWidth(TICK_STROKE);
+            mHourTickPaint.setStrokeWidth(AMBIENT_STROKE);
             mHourTickPaint.setAntiAlias(true);
 
             //Minute text
@@ -227,7 +227,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mTickPaint.setStyle(Paint.Style.FILL);
             mTickPaint.setStrokeJoin(Paint.Join.MITER);
             mTickPaint.setStrokeCap(Paint.Cap.SQUARE);
-            mTickPaint.setStrokeWidth(TICK_STROKE);
+            mTickPaint.setStrokeWidth(AMBIENT_STROKE);
             mTickPaint.setAntiAlias(true);
         }
 
@@ -355,7 +355,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 count = mNotificationCount;
             }
 
-            if (count >= 0) {
+            if (count > 0) {
                 //(x,y) coordinates for where to draw the notification indicator
                 float xPos = mCenterX + dpToPx(mContext, 42);
                 float yPos = mCenterY - dpToPx(mContext, 24);
@@ -402,7 +402,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             final float yPos = (mCenterY
                     - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
-                    - dpToPx(mContext, 2));
+                    - dpToPx(mContext, 1));
 
             canvas.drawText(minuteString,
                     mCenterX,
@@ -665,13 +665,12 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 mBackgroundPaint.setColor(Color.BLACK);
 
                 mHourTickPaint.setColor(Color.WHITE);
-                mHourTickPaint.setStrokeWidth(AMBIENT_STROKE);
 
-                mTickPaint.setColor(Color.WHITE);
-                mTickPaint.setStrokeWidth(AMBIENT_STROKE);
+                mTickPaint.setColor(Color.GRAY);
+                mTickPaint.setStyle(Paint.Style.STROKE);
 
                 mMinuteTextPaint.setColor(Color.WHITE);
-                mMinuteTextPaint.setStrokeWidth(AMBIENT_STROKE);
+                mMinuteTextPaint.setTypeface(mAmbientFont);
 
                 if (mShowNotificationIndicator) {
                     mNotificationTextPaint.setColor(Color.WHITE);
@@ -692,13 +691,13 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 mBackgroundPaint.setColor(mBackgroundColor);
 
                 mHourTickPaint.setColor(mHourTickColor);
-                mHourTickPaint.setStrokeWidth(TICK_STROKE);
+                mHourTickPaint.setStyle(Paint.Style.FILL);
 
                 mTickPaint.setColor(mTickColor);
-                mTickPaint.setStrokeWidth(TICK_STROKE);
+                mTickPaint.setStyle(Paint.Style.FILL);
 
                 mMinuteTextPaint.setColor(mMinuteTextColor);
-                mMinuteTextPaint.setStrokeWidth(TICK_STROKE);
+                mMinuteTextPaint.setTypeface(mMinuteTextFont);
 
                 if (mShowNotificationIndicator) {
                     mNotificationTextPaint.setColor(mNotificationTextColor);
