@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Complications-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_complications_black_24dp"
+        android:key="settings_complication_screen"
+        android:title="@string/settings_complications_title">
+
+        <PreferenceCategory android:title="@string/settings_complication_data_category">
+            <Preference
+                android:icon="@drawable/ic_top_complication_black_24dp"
+                android:key="settings_top_complication"
+                android:title="@string/settings_top_complication">
+                <extra
+                    android:name="id"
+                    android:value="0" />
+            </Preference>
+
+            <Preference
+                android:icon="@drawable/ic_bottom_complication_black_24dp"
+                android:key="settings_bottom_complication"
+                android:title="@string/settings_bottom_complication">
+                <extra
+                    android:name="id"
+                    android:value="1" />
+            </Preference>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/settings_complication_style_category">
+            <Preference
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:key="settings_complication_color"
+                android:summary="%s"
+                android:title="@string/settings_color">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_white" />
+            </Preference>
+
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="settings_complication_border"
+                android:title="@string/settings_draw_border_complications" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!--Colors-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_color_lens_black_24dp"
+        android:key="settings_hands_screen"
+        android:summary="@string/settings_colors_and_misc_summary"
+        android:title="@string/settings_watch_face_components_title">
+
+        <Preference
+            android:icon="@drawable/ic_color_lens_black_24dp"
+            android:key="settings_hour_tick_color"
+            android:summary="%s"
+            android:title="@string/settings_hour_tick_color">
+            <extra
+                android:name="default"
+                android:value="@string/settings_white" />
+        </Preference>
+
+        <Preference
+            android:icon="@drawable/ic_color_lens_black_24dp"
+            android:key="settings_tick_color"
+            android:summary="%s"
+            android:title="@string/settings_tick_color">
+            <extra
+                android:name="default"
+                android:value="@string/settings_dark_gray" />
+        </Preference>
+
+        <Preference
+            android:icon="@drawable/ic_color_lens_black_24dp"
+            android:key="settings_minute_text_color"
+            android:summary="%s"
+            android:title="@string/settings_minute_text_color">
+            <extra
+                android:name="default"
+                android:value="@string/settings_white" />
+        </Preference>
+
+        <Preference
+            android:icon="@drawable/ic_background_black_24dp"
+            android:key="settings_background_color"
+            android:summary="%s"
+            android:title="@string/settings_background_color">
+            <extra
+                android:name="default"
+                android:value="@string/settings_black" />
+        </Preference>
+    </PreferenceScreen>
+
+    <!--Night mode-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_brightness_4_black_24dp"
+        android:key="settings_night_mode"
+        android:title="@string/settings_night_mode_title">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="settings_night_mode_enabled"
+            android:summary="@string/settings_night_mode_auto_enabled_summary"
+            android:title="@string/settings_night_mode_auto_enabled" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="settings_night_mode_manual_enabled"
+            android:summary="@string/settings_night_mode_manual_summary"
+            android:title="@string/settings_night_mode_manual_enabled" />
+
+        <PreferenceCategory android:title="@string/settings_night_mode_time_category">
+            <io.nxt3.just1minute.config.TimePreference
+                android:defaultValue="@string/settings_night_mode_default_start_time"
+                android:key="settings_night_mode_start_time"
+                android:title="@string/settings_night_mode_start" />
+
+            <io.nxt3.just1minute.config.TimePreference
+                android:defaultValue="@string/settings_night_mode_default_end_time"
+                android:key="settings_night_mode_end_time"
+                android:title="@string/settings_night_mode_end" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/settings_colors">
+            <!--Complications-->
+            <PreferenceScreen
+                android:icon="@drawable/ic_complications_black_24dp"
+                android:key="settings_complication_night_mode_screen"
+                android:title="@string/settings_complications_night_mode_title">
+
+                <PreferenceCategory android:title="@string/settings_complication_style_category">
+                    <Preference
+                        android:icon="@drawable/ic_color_lens_black_24dp"
+                        android:key="settings_complication_night_mode_color"
+                        android:summary="%s"
+                        android:title="@string/settings_color">
+                        <extra
+                            android:name="default"
+                            android:value="@string/settings_default_color" />
+                    </Preference>
+                </PreferenceCategory>
+            </PreferenceScreen>
+
+            <!--Colors-->
+            <PreferenceScreen
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:key="settings_hands_night_mode_screen"
+                android:title="@string/settings_watch_face_components_night_mode_title">
+
+                <Preference
+                    android:icon="@drawable/ic_color_lens_black_24dp"
+                    android:key="settings_hour_tick_night_mode_color"
+                    android:summary="%s"
+                    android:title="@string/settings_hour_tick_color">
+                    <extra
+                        android:name="default"
+                        android:value="@string/settings_default_color" />
+                </Preference>
+
+                <Preference
+                    android:icon="@drawable/ic_color_lens_black_24dp"
+                    android:key="settings_tick_night_mode_color"
+                    android:summary="%s"
+                    android:title="@string/settings_tick_color">
+                    <extra
+                        android:name="default"
+                        android:value="@string/settings_dark_gray" />
+                </Preference>
+
+                <Preference
+                    android:icon="@drawable/ic_color_lens_black_24dp"
+                    android:key="settings_minute_text_night_mode_color"
+                    android:summary="%s"
+                    android:title="@string/settings_minute_text_color">
+                    <extra
+                        android:name="default"
+                        android:value="@string/settings_default_color" />
+                </Preference>
+
+                <Preference
+                    android:icon="@drawable/ic_background_black_24dp"
+                    android:key="settings_background_night_mode_color"
+                    android:summary="%s"
+                    android:title="@string/settings_background_color">
+                    <extra
+                        android:name="default"
+                        android:value="@string/settings_black" />
+                </Preference>
+            </PreferenceScreen>
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <!--Notification indicator-->
+    <ListPreference
+        android:defaultValue="0"
+        android:dialogTitle=""
+        android:entries="@array/notification_items"
+        android:entryValues="@array/notification_values"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:key="settings_notification_indicator"
+        android:negativeButtonText=""
+        android:summary="%s"
+        android:title="@string/settings_notification_indicator_title">
+        <extra
+            android:name="icons"
+            android:value="notification_icons" />
+    </ListPreference>
+
+    <!--Reset colors-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_format_color_reset_black_24dp"
+        android:key="settings_reset_settings"
+        android:title="@string/settings_reset_settings_title">
+
+        <Preference
+            android:key="settings_reset_colors"
+            android:title="@string/settings_reset_hand_colors" />
+
+        <Preference
+            android:key="settings_reset_night_mode_colors"
+            android:title="@string/settings_reset_night_mode_colors" />
+    </PreferenceScreen>
+
+    <!--Donations-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_donate_black_24dp"
+        android:key="settings_donate_screen"
+        android:summary="@string/settings_donation_summary"
+        android:title="@string/settings_donate">
+        <Preference
+            android:key="donation_1"
+            android:summary="@string/settings_donate_1_summary"
+            android:title="@string/settings_donate_1" />
+        <Preference
+            android:key="donation_3"
+            android:summary="@string/settings_donate_3_summary"
+            android:title="@string/settings_donate_3" />
+        <Preference
+            android:key="donation_5"
+            android:summary="@string/settings_donate_5_summary"
+            android:title="@string/settings_donate_5" />
+        <Preference
+            android:key="donation_10"
+            android:summary="@string/settings_donate_10_summary"
+            android:title="@string/settings_donate_10" />
+    </PreferenceScreen>
+
+    <!--About-->
+    <PreferenceScreen
+        android:icon="@drawable/ic_info_black_24dp"
+        android:key="settings_about"
+        android:summary="@string/settings_about_summary"
+        android:title="@string/settings_about_title">
+
+        <Preference
+            android:key="app_version"
+            android:persistent="false"
+            android:selectable="false"
+            android:title="@string/settings_about_current_version" />
+
+        <Preference
+            android:icon="@drawable/ic_open_in_browser_black_24dp"
+            android:key="settings_open_changelog"
+            android:summary="@string/settings_about_view_changelog_summary"
+            android:title="@string/settings_about_view_changelog" />
+    </PreferenceScreen>
+</PreferenceScreen>

@@ -1,0 +1,130 @@
+<resources>
+    <string name="settings">Settings</string>
+
+    <!--Used primarily in the TimePicker-->
+    <string name="settings_set">Set</string>
+    <string name="settings_cancel">Cancel</string>
+
+    <!--Complication settings-->
+    <string name="settings_complications_title">Complications</string>
+    <string name="settings_complications_night_mode_title">Complications (Night mode)</string>
+    <string name="settings_top_complication">Top</string>
+    <string name="settings_bottom_complication">Bottom</string>
+    <string name="settings_draw_border_complications">Draw border</string>
+    <string name="settings_empty">Empty</string>
+    <string name="settings_color">Color</string>
+    <string name="settings_colors">Colors</string>
+    <string name="settings_grayscale">Grayscale</string>
+    <string name="settings_complication_data_category">Data</string>
+    <string name="settings_complication_style_category">Style</string>
+
+    <!--Ticks and Text color settings-->
+    <string name="settings_watch_face_components_title">Colors</string>
+    <string name="settings_watch_face_components_night_mode_title">Colors (Night mode)</string>
+    <string name="settings_colors_and_misc_summary">Ticks and text</string>
+    <string name="settings_hour_tick_color">Current hour tick</string>
+    <string name="settings_tick_color">Hour ticks</string>
+    <string name="settings_minute_text_color">Minute text</string>
+    <string name="settings_background_color">Background</string>
+    <string name="settings_misc_category">Misc</string>
+
+    <!--Background color settings-->
+    <string name="settings_background_night_mode_title">Background (Night mode)</string>
+
+    <!--Notification label-->
+    <string name="settings_notification_indicator_title">Notification indicator</string>
+    <string name="settings_notifications_disabled">Disabled</string>
+    <string name="settings_notifications_unread">Unread notifications</string>
+    <string name="settings_notifications_all">All notifications</string>
+
+    <!--Night mode-->
+    <string name="settings_night_mode_title">Night mode</string>
+    <string name="settings_night_mode_auto_enabled">Auto night mode</string>
+    <string name="settings_night_mode_auto_enabled_summary">Select the time range below</string>
+    <string name="settings_night_mode_manual_enabled">Manual night mode</string>
+    <string name="settings_night_mode_manual_summary">Tap center of watch to toggle night mode</string>
+    <string name="settings_night_mode_time_category">Times</string>
+    <string name="settings_night_mode_start">Night mode start</string>
+    <string name="settings_night_mode_end">Night mode end</string>
+    <!--8pm is default start time-->
+    <string name="settings_night_mode_default_start_time" translatable="false">1483318830000</string>
+    <!--7am is default end time-->
+    <string name="settings_night_mode_default_end_time" translatable="false">1483272000000</string>
+
+    <!--Reset to default-->
+    <string name="settings_reset_settings_title">Reset settings to default</string>
+    <string name="settings_reset_hand_colors">Reset colors</string>
+    <string name="settings_reset_night_mode_colors">Reset night mode colors</string>
+    <string name="settings_confirmation_colors_reset_toast">Colors reset</string>
+    <string name="settings_confirmation_night_mode_reset_toast">Night mode colors reset</string>
+
+    <!--Donations-->
+    <string name="settings_donate">Donate</string>
+    <string name="settings_donation_summary">Support development</string>
+    <string name="settings_donation_error_toast">There was an error with your donation</string>
+    <string name="settings_donate_1">Donate &#36;1</string>
+    <string name="settings_donate_3">Donate &#36;3</string>
+    <string name="settings_donate_5">Donate &#36;5</string>
+    <string name="settings_donate_10">Donate &#36;10</string>
+    <string name="settings_donate_1_summary">Support 0.1 hours of development</string>
+    <string name="settings_donate_3_summary">Support 0.3 hours of development</string>
+    <string name="settings_donate_5_summary">Support 0.5 hours of development</string>
+    <string name="settings_donate_10_summary">Support 1 hour of development</string>
+
+    <!--About screen-->
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_summary">Version &amp; changelog</string>
+    <string name="settings_about_current_version">Current version</string>
+    <string name="settings_about_view_changelog">View changelog</string>
+    <string name="settings_about_view_changelog_summary">Open changelog on phone</string>
+    <string name="settings_about_opening_toast">Opening on phone&#8230;</string>
+
+    <!--Normal Colors-->
+    <string name="settings_default_color">Default color</string>
+    <string name="settings_red">Red</string>
+    <string name="settings_pink">Pink</string>
+    <string name="settings_rose_gold">Rose gold</string>
+    <string name="settings_purple">Purple</string>
+    <string name="settings_deep_purple">Deep purple</string>
+    <string name="settings_indigo">Indigo</string>
+    <string name="settings_blue">Blue</string>
+    <string name="settings_light_blue">Light blue</string>
+    <string name="settings_cyan">Cyan</string>
+    <string name="settings_teal">Teal</string>
+    <string name="settings_green">Green</string>
+    <string name="settings_light_green">Light green</string>
+    <string name="settings_lime">Lime</string>
+    <string name="settings_yellow">Yellow</string>
+    <string name="settings_amber">Amber</string>
+    <string name="settings_orange">Orange</string>
+    <string name="settings_deep_orange">Deep orange</string>
+    <string name="settings_brown">Brown</string>
+    <string name="settings_gray">Gray</string>
+    <string name="settings_blue_gray">Blue gray</string>
+
+    <!--Dark colors-->
+    <string name="settings_dark_red">Dark red</string>
+    <string name="settings_dark_pink">Dark pink</string>
+    <string name="settings_dark_rose_gold">Dark rose gold</string>
+    <string name="settings_dark_purple">Dark purple</string>
+    <string name="settings_dark_deep_purple">Dark deep purple</string>
+    <string name="settings_dark_indigo">Dark indigo</string>
+    <string name="settings_dark_blue">Dark blue</string>
+    <string name="settings_dark_light_blue">Dark light blue</string>
+    <string name="settings_dark_cyan">Dark cyan</string>
+    <string name="settings_dark_teal">Dark teal</string>
+    <string name="settings_dark_green">Dark green</string>
+    <string name="settings_dark_light_green">Dark light green</string>
+    <string name="settings_dark_lime">Dark lime</string>
+    <string name="settings_dark_yellow">Dark yellow</string>
+    <string name="settings_dark_amber">Dark amber</string>
+    <string name="settings_dark_orange">Dark orange</string>
+    <string name="settings_dark_deep_orange">Dark deep orange</string>
+    <string name="settings_dark_brown">Dark brown</string>
+    <string name="settings_dark_gray">Dark gray</string>
+    <string name="settings_dark_gray_alt">Dark gray (alt)</string>
+    <string name="settings_dark_blue_gray">Dark blue gray</string>
+
+    <string name="settings_black">Black</string>
+    <string name="settings_white">White</string>
+</resources>

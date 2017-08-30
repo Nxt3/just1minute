@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="color_names">
+        <item>@string/settings_default_color</item>
+
+        <item>@string/settings_red</item>
+        <item>@string/settings_dark_red</item>
+
+        <item>@string/settings_pink</item>
+        <item>@string/settings_dark_pink</item>
+
+        <item>@string/settings_rose_gold</item>
+
+        <item>@string/settings_purple</item>
+        <item>@string/settings_dark_purple</item>
+
+        <item>@string/settings_deep_purple</item>
+        <item>@string/settings_deep_purple</item>
+
+        <item>@string/settings_indigo</item>
+        <item>@string/settings_dark_indigo</item>
+
+        <item>@string/settings_blue</item>
+        <item>@string/settings_dark_blue</item>
+
+        <item>@string/settings_light_blue</item>
+        <item>@string/settings_dark_light_blue</item>
+
+        <item>@string/settings_cyan</item>
+        <item>@string/settings_dark_cyan</item>
+
+        <item>@string/settings_teal</item>
+        <item>@string/settings_dark_teal</item>
+
+        <item>@string/settings_green</item>
+        <item>@string/settings_dark_green</item>
+
+        <item>@string/settings_light_green</item>
+        <item>@string/settings_dark_light_green</item>
+
+        <item>@string/settings_lime</item>
+        <item>@string/settings_dark_lime</item>
+
+        <item>@string/settings_yellow</item>
+        <item>@string/settings_dark_yellow</item>
+
+        <item>@string/settings_amber</item>
+        <item>@string/settings_dark_amber</item>
+
+        <item>@string/settings_orange</item>
+        <item>@string/settings_dark_orange</item>
+
+        <item>@string/settings_deep_orange</item>
+        <item>@string/settings_dark_deep_orange</item>
+
+        <item>@string/settings_brown</item>
+        <item>@string/settings_dark_brown</item>
+
+        <item>@string/settings_gray</item>
+        <item>@string/settings_dark_gray</item>
+        <item>@string/settings_dark_gray_alt</item>
+
+        <item>@string/settings_blue_gray</item>
+        <item>@string/settings_dark_blue_gray</item>
+
+        <item>@string/settings_black</item>
+        <item>@string/settings_white</item>
+    </array>
+    <array name="color_values">
+        <item>@color/default_color</item>
+
+        <item>@color/red</item>
+        <item>@color/dark_red</item>
+
+        <item>@color/pink</item>
+        <item>@color/dark_pink</item>
+
+        <item>@color/rose_gold</item>
+
+        <item>@color/purple</item>
+        <item>@color/dark_purple</item>
+
+        <item>@color/deep_purple</item>
+        <item>@color/dark_deep_purple</item>
+
+        <item>@color/indigo</item>
+        <item>@color/dark_indigo</item>
+
+        <item>@color/blue</item>
+        <item>@color/dark_blue</item>
+
+        <item>@color/light_blue</item>
+        <item>@color/dark_light_blue</item>
+
+        <item>@color/cyan</item>
+        <item>@color/dark_cyan</item>
+
+        <item>@color/teal</item>
+        <item>@color/dark_teal</item>
+
+        <item>@color/green</item>
+        <item>@color/dark_green</item>
+
+        <item>@color/light_green</item>
+        <item>@color/dark_light_green</item>
+
+        <item>@color/lime</item>
+        <item>@color/dark_lime</item>
+
+        <item>@color/yellow</item>
+        <item>@color/dark_yellow</item>
+
+        <item>@color/amber</item>
+        <item>@color/dark_amber</item>
+
+        <item>@color/orange</item>
+        <item>@color/dark_orange</item>
+
+        <item>@color/deep_orange</item>
+        <item>@color/dark_deep_orange</item>
+
+        <item>@color/brown</item>
+        <item>@color/dark_brown</item>
+
+        <item>@color/gray</item>
+        <item>@color/dark_gray</item>
+        <item>@color/dark_gray_alt</item>
+
+        <item>@color/blue_gray</item>
+        <item>@color/dark_blue_gray</item>
+
+        <item>@color/black</item>
+        <item>@color/white</item>
+    </array>
+
+    <string-array name="notification_items">
+        <item>@string/settings_notifications_disabled</item>
+        <item>@string/settings_notifications_unread</item>
+        <item>@string/settings_notifications_all</item>
+    </string-array>
+    <string-array name="notification_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <array name="notification_icons">
+        <item>@drawable/ic_notifications_off_black_24dp</item>
+        <item>@drawable/ic_notifications_black_24dp</item>
+        <item>@drawable/ic_notifications_active_black_24dp</item>
+    </array>
+
+    <string-array name="empty_array" />
+</resources>
