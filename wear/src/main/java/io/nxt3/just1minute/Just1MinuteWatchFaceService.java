@@ -43,16 +43,23 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
     private final String TAG = "Just1Minute";
 
     //Supported complication types
-    public static final int[] COMPLICATION_SUPPORTED_TYPES = {
-            ComplicationData.TYPE_RANGED_VALUE,
-            ComplicationData.TYPE_LONG_TEXT,
-            ComplicationData.TYPE_ICON,
-            ComplicationData.TYPE_SHORT_TEXT,
-            ComplicationData.TYPE_SMALL_IMAGE
+    public static final int[][] COMPLICATION_SUPPORTED_TYPES = {
+            {
+                    ComplicationData.TYPE_RANGED_VALUE,
+                    ComplicationData.TYPE_LONG_TEXT,
+                    ComplicationData.TYPE_ICON,
+                    ComplicationData.TYPE_SHORT_TEXT,
+                    ComplicationData.TYPE_SMALL_IMAGE
+            },
+            {
+                    ComplicationData.TYPE_LARGE_IMAGE
+            }
     };
-    private static final int TOP_COMPLICATION_ID = 0;
-    private static final int BOTTOM_COMPLICATION_ID = 1;
+    private static final int WALLPAPER_COMPLICATION_ID = 0;
+    private static final int TOP_COMPLICATION_ID = 1;
+    private static final int BOTTOM_COMPLICATION_ID = 2;
     public static final int[] COMPLICATION_IDS = {
+            WALLPAPER_COMPLICATION_ID,
             TOP_COMPLICATION_ID,
             BOTTOM_COMPLICATION_ID
     };
@@ -132,10 +139,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private final float COMPLICATION_RADIUS = 8f;
 
         //Fonts
+        private Typeface mMinuteTextFont;
         private final Typeface mAmbientFont
                 = Typeface.create("sans-serif-thin", Typeface.NORMAL);
-        private Typeface mMinuteTextFont;
-//                = Typeface.create("sans-serif-medium", Typeface.NORMAL);
 
         //Other settings
         private boolean mShowComplicationBorder;
@@ -173,8 +179,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     .setAcceptsTapEvents(true)
                     .build());
 
-            mMinuteTextFont = Typeface.createFromAsset(getAssets(), "RobotoMono-Medium.ttf");
-
             loadMiscPrefs();
 
             if (!isInNightMode()) {
@@ -183,7 +187,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 loadNightModeColorPrefs();
             }
 
-            initializeBackground();
+            initializeBackgroundAndTicks();
             initializeComplications();
             initializeNotificationCount();
             initializeWatchFace();
@@ -214,7 +218,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         /**
          * Init the backgrounds and circle
          */
-        private void initializeBackground() {
+        private void initializeBackgroundAndTicks() {
             Log.d(TAG, "Init background");
 
             mBackgroundPaint = new Paint();
@@ -288,12 +292,12 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
-            drawBackgroundAndTicks(canvas);
+            drawBackground(canvas);
 
             drawComplications(canvas, now);
 
+            drawTicks(canvas);
             drawMinuteText(canvas);
-            drawHourTick(canvas);
 
             if (mShowNotificationIndicator) {
                 drawNotificationCount(canvas);
@@ -301,28 +305,15 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         }
 
         /**
-         * Handles drawing the background and tick marks
+         * Handles drawing the background
          *
          * @param canvas to draw to
          */
-        private void drawBackgroundAndTicks(Canvas canvas) {
+        private void drawBackground(Canvas canvas) {
             if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
                 canvas.drawColor(Color.BLACK);
             } else {
                 canvas.drawColor(mBackgroundColor);
-            }
-
-            //draw hour tick marks
-            for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
-                final Path polyPath = new Path();
-                polyPath.moveTo(mCenterX - TICK_TOP_WIDTH, TICK_OFFSET); //top left
-                polyPath.lineTo(mCenterX + TICK_TOP_WIDTH, TICK_OFFSET); //top right
-                polyPath.lineTo(mCenterX + TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom right
-                polyPath.lineTo(mCenterX - TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom left
-                polyPath.close();
-
-                canvas.drawPath(polyPath, mTickPaint);
-                canvas.rotate(30, mCenterX, mCenterY);
             }
         }
 
@@ -339,6 +330,53 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
                 complicationDrawable.draw(canvas, currentTimeMillis);
             }
+        }
+
+        /**
+         * Handles drawing the tick marks AND the current hour tick
+         *
+         * @param canvas to draw to
+         */
+        private void drawTicks(Canvas canvas) {
+            final int currentHour = mCalendar.get(Calendar.HOUR);
+
+            for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
+                final Path tickMarkPolygon = new Path();
+                tickMarkPolygon.moveTo(mCenterX - TICK_TOP_WIDTH, TICK_OFFSET); //top left
+                tickMarkPolygon.lineTo(mCenterX + TICK_TOP_WIDTH, TICK_OFFSET); //top right
+                tickMarkPolygon.lineTo(mCenterX + TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom right
+                tickMarkPolygon.lineTo(mCenterX - TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom left
+                tickMarkPolygon.close();
+
+                //If the current hour is at the index, then draw the hour tick instead
+                if (currentHour == tickIndex) {
+                    canvas.drawPath(tickMarkPolygon, mHourTickPaint);
+                } else {
+                    canvas.drawPath(tickMarkPolygon, mTickPaint);
+                }
+                canvas.rotate(30, mCenterX, mCenterY); //rotate the canvas 30 degrees each time
+            }
+        }
+
+        /**
+         * Handles drawing the minute text
+         *
+         * @param canvas to draw to
+         */
+        private void drawMinuteText(Canvas canvas) {
+            mMinuteTextPaint.setTextAlign(Paint.Align.CENTER);
+
+            final String minuteString = String.format(Locale.getDefault(),
+                    "%02d", mCalendar.get(Calendar.MINUTE));
+
+            final float yPos = (mCenterY
+                    - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
+                    - dpToPx(mContext, 1));
+
+            canvas.drawText(minuteString,
+                    mCenterX,
+                    yPos,
+                    mMinuteTextPaint);
         }
 
         /**
@@ -365,49 +403,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                         yPos - (mNotificationTextPaint.descent()
                                 + mNotificationTextPaint.ascent()) / 2, mNotificationTextPaint);
             }
-        }
-
-        /**
-         * Handles drawing the hour tick
-         *
-         * @param canvas to draw to
-         */
-        private void drawHourTick(Canvas canvas) {
-            final float currentHour = mCalendar.get(Calendar.HOUR);
-
-            final Path polyPath = new Path();
-            polyPath.moveTo(mCenterX - TICK_TOP_WIDTH, TICK_OFFSET); //top left
-            polyPath.lineTo(mCenterX + TICK_TOP_WIDTH, TICK_OFFSET); //top right
-            polyPath.lineTo(mCenterX + TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom right
-            polyPath.lineTo(mCenterX - TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom left
-            polyPath.close();
-
-            //rotate the canvas to the current hour--yay trig!
-            canvas.save();
-            canvas.rotate(currentHour * 30, mCenterX, mCenterY);
-            canvas.drawPath(polyPath, mHourTickPaint);
-            canvas.restore();
-        }
-
-        /**
-         * Handles drawing the minute text
-         *
-         * @param canvas to draw to
-         */
-        private void drawMinuteText(Canvas canvas) {
-            mMinuteTextPaint.setTextAlign(Paint.Align.CENTER);
-
-            final String minuteString = String.format(Locale.getDefault(),
-                    "%02d", mCalendar.get(Calendar.MINUTE));
-
-            final float yPos = (mCenterY
-                    - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
-                    - dpToPx(mContext, 1));
-
-            canvas.drawText(minuteString,
-                    mCenterX,
-                    yPos,
-                    mMinuteTextPaint);
         }
 
 
@@ -620,7 +615,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final int centerYInt = Math.round(centerY);
 
             //creates the width to the Rect
-            final int magicNumber = 35;
+            final int magicNumber = Math.round(dpToPx(mContext, 27));
 
             return new Rect(centerXInt - radius - magicNumber,
                     centerYInt - radius,
@@ -635,7 +630,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mCenterY = height / 2;
 
             //Handle measuring the minute text size
-            mMinuteTextPaint.setTextSize(width / 3.5f);
+            mMinuteTextPaint.setTextSize(HelperFunctions.spToPx(mContext, 62f));
 
             //Handle measuring the notification text
             mNotificationTextPaint.setTextSize(width / 20);
@@ -654,6 +649,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final ComplicationDrawable bottomComplicationDrawable =
                     mComplicationDrawableSparseArray.get(BOTTOM_COMPLICATION_ID);
             bottomComplicationDrawable.setBounds(bottomBounds);
+
+            final ComplicationDrawable wallpaperComplicationDrawable =
+                    mComplicationDrawableSparseArray.get(WALLPAPER_COMPLICATION_ID);
+            wallpaperComplicationDrawable.setBounds(new Rect(0, 0, width, height));
         }
 
 
@@ -876,13 +875,39 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             //Complication borders & showing/hiding the second hand
             mShowComplicationBorder = prefs.getBoolean("settings_complication_border", true);
 
+            //Handles font selection
+            final String minuteFont = prefs.getString("settings_minute_font", null);
+            if (minuteFont != null) {
+                switch (minuteFont) {
+                    case "0":
+                        mMinuteTextFont
+                                = Typeface.create("sans-serif-regular", Typeface.NORMAL);
+                        break;
+                    case "1":
+                        mMinuteTextFont
+                                = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+                        break;
+                    case "2":
+                        mMinuteTextFont
+                                = Typeface.createFromAsset(getAssets(), "RobotoMono-Medium.ttf");
+                        break;
+                    case "3":
+                        mMinuteTextFont
+                                = Typeface.createFromAsset(getAssets(), "ShortStack-Regular.ttf");
+                        break;
+                }
+            } else {
+                mMinuteTextFont = Typeface.create("sans-serif-regular", Typeface.NORMAL);
+            }
+
+
             //Notification indicator
-            final String mNotificationIndicator
+            final String notificationIndicator
                     = prefs.getString("settings_notification_indicator", null);
             mNotificationIndicatorUnread
-                    = mNotificationIndicator != null && mNotificationIndicator.equals("1");
+                    = notificationIndicator != null && notificationIndicator.equals("1");
             mNotificationIndicatorAll
-                    = mNotificationIndicator != null && mNotificationIndicator.equals("2");
+                    = notificationIndicator != null && notificationIndicator.equals("2");
             mShowNotificationIndicator
                     = (mNotificationIndicatorAll || mNotificationIndicatorUnread);
 

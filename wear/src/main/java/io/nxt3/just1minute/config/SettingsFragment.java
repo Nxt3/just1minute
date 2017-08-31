@@ -131,6 +131,7 @@ public class SettingsFragment extends PreferenceFragment
         switch (preference.getKey()) {
             case "settings_top_complication":
             case "settings_bottom_complication":
+            case "settings_wallpaper_complication":
                 final int id = extras.getInt("id");
                 startActivityForResult(
                         ComplicationHelperActivity.createProviderChooserHelperIntent(
@@ -138,7 +139,7 @@ public class SettingsFragment extends PreferenceFragment
                                 new ComponentName(mContext.getApplicationContext(),
                                         Just1MinuteWatchFaceService.class),
                                 id,
-                                Just1MinuteWatchFaceService.COMPLICATION_SUPPORTED_TYPES), id);
+                                getSupportedComplicationTypes(id)), id);
                 break;
 
             case "settings_complication_color":
@@ -328,7 +329,6 @@ public class SettingsFragment extends PreferenceFragment
                 case 0:
                 case 1:
                 case 2:
-                case 3:
                     setComplicationSummary(requestCode,
                             data.getParcelableExtra(ProviderChooserIntent.EXTRA_PROVIDER_INFO));
                     break;
@@ -552,9 +552,12 @@ public class SettingsFragment extends PreferenceFragment
 
         switch (id) {
             case 0:
-                key = "settings_top_complication";
+                key = "settings_wallpaper_complication";
                 break;
             case 1:
+                key = "settings_top_complication";
+                break;
+            case 2:
                 key = "settings_bottom_complication";
                 break;
             default:
@@ -567,6 +570,21 @@ public class SettingsFragment extends PreferenceFragment
             final String providerName = (providerInfo != null)
                     ? providerInfo.providerName : getString(R.string.settings_empty);
             preference.setSummary(providerName);
+        }
+    }
+
+    /**
+     * Gets the supported data types for a given complication
+     *
+     * @param id of the complication
+     * @return the array of supported types
+     */
+    private int[] getSupportedComplicationTypes(int id) {
+        switch (id) {
+            case 0:
+                return Just1MinuteWatchFaceService.COMPLICATION_SUPPORTED_TYPES[1];
+            default:
+                return Just1MinuteWatchFaceService.COMPLICATION_SUPPORTED_TYPES[0];
         }
     }
 }

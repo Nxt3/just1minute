@@ -13,7 +13,7 @@
                 android:title="@string/settings_top_complication">
                 <extra
                     android:name="id"
-                    android:value="0" />
+                    android:value="1" />
             </Preference>
 
             <Preference
@@ -22,7 +22,7 @@
                 android:title="@string/settings_bottom_complication">
                 <extra
                     android:name="id"
-                    android:value="1" />
+                    android:value="2" />
             </Preference>
         </PreferenceCategory>
 
@@ -48,48 +48,76 @@
     <PreferenceScreen
         android:icon="@drawable/ic_color_lens_black_24dp"
         android:key="settings_hands_screen"
-        android:summary="@string/settings_colors_and_misc_summary"
-        android:title="@string/settings_watch_face_components_title">
+        android:summary="@string/settings_colors_and_font_summary"
+        android:title="@string/settings_colors_and_font_title">
 
-        <Preference
-            android:icon="@drawable/ic_color_lens_black_24dp"
-            android:key="settings_hour_tick_color"
-            android:summary="%s"
-            android:title="@string/settings_hour_tick_color">
-            <extra
-                android:name="default"
-                android:value="@string/settings_white" />
-        </Preference>
+        <PreferenceCategory android:title="@string/settings_ticks_category">
+            <Preference
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:key="settings_hour_tick_color"
+                android:summary="%s"
+                android:title="@string/settings_hour_tick_color">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_white" />
+            </Preference>
 
-        <Preference
-            android:icon="@drawable/ic_color_lens_black_24dp"
-            android:key="settings_tick_color"
-            android:summary="%s"
-            android:title="@string/settings_tick_color">
-            <extra
-                android:name="default"
-                android:value="@string/settings_dark_gray" />
-        </Preference>
+            <Preference
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:key="settings_tick_color"
+                android:summary="%s"
+                android:title="@string/settings_tick_color">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_dark_gray" />
+            </Preference>
+        </PreferenceCategory>
 
-        <Preference
-            android:icon="@drawable/ic_color_lens_black_24dp"
-            android:key="settings_minute_text_color"
-            android:summary="%s"
-            android:title="@string/settings_minute_text_color">
-            <extra
-                android:name="default"
-                android:value="@string/settings_white" />
-        </Preference>
+        <PreferenceCategory android:title="@string/settings_minutes_category">
+            <Preference
+                android:icon="@drawable/ic_format_color_text_black_24dp"
+                android:key="settings_minute_text_color"
+                android:summary="%s"
+                android:title="@string/settings_minute_text_color">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_white" />
+            </Preference>
 
-        <Preference
-            android:icon="@drawable/ic_background_black_24dp"
-            android:key="settings_background_color"
-            android:summary="%s"
-            android:title="@string/settings_background_color">
-            <extra
-                android:name="default"
-                android:value="@string/settings_black" />
-        </Preference>
+            <ListPreference
+                android:defaultValue="0"
+                android:dialogTitle=""
+                android:entries="@array/font_items"
+                android:entryValues="@array/font_values"
+                android:icon="@drawable/ic_font_download_black_24dp"
+                android:key="settings_minute_font"
+                android:negativeButtonText=""
+                android:summary="%s"
+                android:title="@string/settings_minute_font_style" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/settings_background_category">
+            <Preference
+                android:icon="@drawable/ic_background_black_24dp"
+                android:key="settings_background_color"
+                android:summary="%s"
+                android:title="@string/settings_background_category">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_black" />
+            </Preference>
+
+            <Preference
+                android:icon="@drawable/ic_image_black_24dp"
+                android:key="settings_wallpaper_complication"
+                android:title="@string/settings_wallpaper_complication">
+                <extra
+                    android:name="id"
+                    android:value="0" />
+            </Preference>
+
+        </PreferenceCategory>
+
     </PreferenceScreen>
 
     <!--Night mode-->
@@ -146,7 +174,7 @@
             <PreferenceScreen
                 android:icon="@drawable/ic_color_lens_black_24dp"
                 android:key="settings_hands_night_mode_screen"
-                android:title="@string/settings_watch_face_components_night_mode_title">
+                android:title="@string/settings_colors_night_mode_title">
 
                 <Preference
                     android:icon="@drawable/ic_color_lens_black_24dp"
@@ -182,7 +210,7 @@
                     android:icon="@drawable/ic_background_black_24dp"
                     android:key="settings_background_night_mode_color"
                     android:summary="%s"
-                    android:title="@string/settings_background_color">
+                    android:title="@string/settings_background_category">
                     <extra
                         android:name="default"
                         android:value="@string/settings_black" />

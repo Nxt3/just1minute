@@ -133,6 +133,19 @@
         <item>@color/white</item>
     </array>
 
+    <string-array name="font_items">
+        <item>@string/settings_roboto_regular</item>
+        <item>@string/settings_roboto_medium</item>
+        <item>@string/settings_roboto_mono_medium</item>
+        <item>@string/settings_short_stack_handwritten</item>
+    </string-array>
+    <string-array name="font_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="notification_items">
         <item>@string/settings_notifications_disabled</item>
         <item>@string/settings_notifications_unread</item>

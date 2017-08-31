@@ -8,25 +8,36 @@
     <!--Complication settings-->
     <string name="settings_complications_title">Complications</string>
     <string name="settings_complications_night_mode_title">Complications (Night mode)</string>
+    <string name="settings_complication_data_category">Data</string>
     <string name="settings_top_complication">Top</string>
     <string name="settings_bottom_complication">Bottom</string>
+    <string name="settings_wallpaper_complication">Wallpaper</string>
     <string name="settings_draw_border_complications">Draw border</string>
     <string name="settings_empty">Empty</string>
     <string name="settings_color">Color</string>
     <string name="settings_colors">Colors</string>
-    <string name="settings_grayscale">Grayscale</string>
-    <string name="settings_complication_data_category">Data</string>
     <string name="settings_complication_style_category">Style</string>
 
     <!--Ticks and Text color settings-->
-    <string name="settings_watch_face_components_title">Colors</string>
-    <string name="settings_watch_face_components_night_mode_title">Colors (Night mode)</string>
-    <string name="settings_colors_and_misc_summary">Ticks and text</string>
+    <string name="settings_colors_and_font_title">Colors and font</string>
+    <string name="settings_colors_and_font_summary">Ticks and text</string>
+    <string name="settings_colors_night_mode_title">Colors (Night mode)</string>
+    <string name="settings_ticks_category">Ticks</string>
     <string name="settings_hour_tick_color">Current hour tick</string>
     <string name="settings_tick_color">Hour ticks</string>
-    <string name="settings_minute_text_color">Minute text</string>
-    <string name="settings_background_color">Background</string>
+    <string name="settings_minutes_category">Minutes</string>
+    <string name="settings_minute_text_color">Text color</string>
+    <string name="settings_minute_font_style">Font style</string>
+    <string name="settings_background_category">Background</string>
+    <string name="settings_background_color">Color</string>
+    <string name="settings_background_wallpaper">Wallpaper</string>
     <string name="settings_misc_category">Misc</string>
+
+    <!--Fonts-->
+    <string name="settings_roboto_regular">Roboto Regular</string>
+    <string name="settings_roboto_medium">Roboto Medium</string>
+    <string name="settings_roboto_mono_medium">Roboto Mono (medium)</string>
+    <string name="settings_short_stack_handwritten">Handwritten</string>
 
     <!--Background color settings-->
     <string name="settings_background_night_mode_title">Background (Night mode)</string>
