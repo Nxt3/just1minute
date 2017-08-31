@@ -16,12 +16,12 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "app_name", "Just1Minute"
+            resValue "string", "app_name", "just1minute"
         }
 
         debug {
             applicationIdSuffix ".debug"
-            resValue "string", "app_name", "Just1Minute (debug)"
+            resValue "string", "app_name", "just1minute (debug)"
         }
     }
 
