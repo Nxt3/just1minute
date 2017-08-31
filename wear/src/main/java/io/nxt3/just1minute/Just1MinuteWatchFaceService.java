@@ -396,7 +396,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 count = mNotificationCount;
             }
 
-            if (count >= 0) {
+            if (count > 0) {
                 //(x,y) coordinates for where to draw the notification indicator
                 float xPos = mCenterX + scalePosition(mCenterX, 5f);
                 float yPos = mCenterY - scalePosition(mCenterY, 8f);
