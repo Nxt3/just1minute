@@ -37,10 +37,12 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import static io.nxt3.just1minute.HelperFunctions.dpToPx;
+import static io.nxt3.just1minute.HelperFunctions.isTimeInRange;
+import static io.nxt3.just1minute.HelperFunctions.scalePosition;
+import static io.nxt3.just1minute.HelperFunctions.spToPx;
 
 public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
-    private final String TAG = "Just1Minute";
+    private final String TAG = "just1minute";
 
     //Supported complication types
     public static final int[][] COMPLICATION_SUPPORTED_TYPES = {
@@ -76,12 +78,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         //Tick parameters
         //used as the starting point for drawing the ticks
-//        private final float TICK_STROKE = 7f;
         private final float AMBIENT_STROKE = 2f;
-        private final float TICK_TOP_WIDTH = 4f;
-        private final float TICK_BOTTOM_WIDTH = 3f;
-        private final float TICK_OFFSET = 12f;
-        private final float TICK_LENGTH = 47f;
 
         //Update rate in milliseconds for interactive mode; once a minute by default
         private final long INTERACTIVE_UPDATE_RATE_MS = TimeUnit.MINUTES.toMillis(1);
@@ -339,12 +336,18 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private void drawTicks(Canvas canvas) {
             final int currentHour = mCalendar.get(Calendar.HOUR);
 
+            //properties for the ticks
+            final float topTickWidth = 4f;
+            final float bottomTickWidth = 3f;
+            final float tickLength = scalePosition(mCenterX, 7.3f);
+            final float tickOffset = scalePosition(mCenterX, 32f);
+
             for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
                 final Path tickMarkPolygon = new Path();
-                tickMarkPolygon.moveTo(mCenterX - TICK_TOP_WIDTH, TICK_OFFSET); //top left
-                tickMarkPolygon.lineTo(mCenterX + TICK_TOP_WIDTH, TICK_OFFSET); //top right
-                tickMarkPolygon.lineTo(mCenterX + TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom right
-                tickMarkPolygon.lineTo(mCenterX - TICK_BOTTOM_WIDTH, TICK_OFFSET + TICK_LENGTH); //bottom left
+                tickMarkPolygon.moveTo(mCenterX - topTickWidth, tickOffset); //top left
+                tickMarkPolygon.lineTo(mCenterX + topTickWidth, tickOffset); //top right
+                tickMarkPolygon.lineTo(mCenterX + bottomTickWidth, tickOffset + tickLength); //bottom right
+                tickMarkPolygon.lineTo(mCenterX - bottomTickWidth, tickOffset + tickLength); //bottom left
                 tickMarkPolygon.close();
 
                 //If the current hour is at the index, then draw the hour tick instead
@@ -370,7 +373,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             final float yPos = (mCenterY
                     - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
-                    - dpToPx(mContext, 1));
+                    //move the text ever-so-slightly upwards to make it look more centered
+                    - scalePosition(mCenterX, 192f));
 
             canvas.drawText(minuteString,
                     mCenterX,
@@ -392,10 +396,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 count = mNotificationCount;
             }
 
-            if (count > 0) {
+            if (count >= 0) {
                 //(x,y) coordinates for where to draw the notification indicator
-                float xPos = mCenterX + dpToPx(mContext, 42);
-                float yPos = mCenterY - dpToPx(mContext, 24);
+                float xPos = mCenterX + scalePosition(mCenterX, 5f);
+                float yPos = mCenterY - scalePosition(mCenterY, 8f);
 
                 canvas.drawCircle(xPos, yPos, mCenterX * 0.06f, mNotificationCirclePaint);
                 canvas.drawText(String.valueOf(mNotificationCount), xPos,
@@ -614,7 +618,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final int centerYInt = Math.round(centerY);
 
             //creates the width to the Rect
-            final int magicNumber = Math.round(dpToPx(mContext, 26));
+            final int magicNumber = Math.round(scalePosition(mCenterX, 8f));
 
             return new Rect(centerXInt - radius - magicNumber,
                     centerYInt - radius,
@@ -629,10 +633,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mCenterY = height / 2;
 
             //Handle measuring the minute text size
-            mMinuteTextPaint.setTextSize(HelperFunctions.spToPx(mContext, 62f));
+            mMinuteTextPaint.setTextSize(scalePosition(mCenterX, 3.6f));
 
             //Handle measuring the notification text
-            mNotificationTextPaint.setTextSize(width / 20);
+            mNotificationTextPaint.setTextSize(scalePosition(mCenterX, 20f));
 
             //Below is for measuring the complications
             final float offset = -16f; //offset for complications
@@ -748,18 +752,18 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
                     final float textSize = 13f;
                     complicationDrawable
-                            .setTextSizeActive(HelperFunctions.spToPx(mContext, textSize));
+                            .setTextSizeActive(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTitleSizeActive(HelperFunctions.spToPx(mContext, textSize));
+                            .setTitleSizeActive(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTextSizeAmbient(HelperFunctions.spToPx(mContext, textSize));
+                            .setTextSizeAmbient(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTitleSizeAmbient(HelperFunctions.spToPx(mContext, textSize));
+                            .setTitleSizeAmbient(spToPx(mContext, textSize));
 
                     complicationDrawable
-                            .setBorderRadiusActive((int) HelperFunctions.dpToPx(mContext, 50));
+                            .setBorderRadiusActive(100);
                     complicationDrawable
-                            .setBorderRadiusAmbient((int) HelperFunctions.dpToPx(mContext, 50));
+                            .setBorderRadiusAmbient(100);
                 } else { //if the border is NOT drawn...
                     complicationDrawable
                             .setBorderStyleActive(ComplicationDrawable.BORDER_STYLE_NONE);
@@ -768,13 +772,13 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
                     final float textSize = 14f;
                     complicationDrawable
-                            .setTextSizeActive(HelperFunctions.spToPx(mContext, textSize));
+                            .setTextSizeActive(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTitleSizeActive(HelperFunctions.spToPx(mContext, textSize));
+                            .setTitleSizeActive(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTextSizeAmbient(HelperFunctions.spToPx(mContext, textSize));
+                            .setTextSizeAmbient(spToPx(mContext, textSize));
                     complicationDrawable
-                            .setTitleSizeAmbient(HelperFunctions.spToPx(mContext, textSize));
+                            .setTitleSizeAmbient(spToPx(mContext, textSize));
 
                     complicationDrawable.setBorderRadiusActive(0);
                     complicationDrawable.setBorderRadiusAmbient(0);
@@ -1039,7 +1043,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
          */
         private boolean isInNightMode() {
             if (mNightModeEnabled) {
-                return HelperFunctions.isTimeInRange(mCalendar.getTimeInMillis(),
+                return isTimeInRange(mCalendar.getTimeInMillis(),
                         mNightModeStartTimeMillis, mNightModeEndTimeMillis);
             } else {
                 return mForceNightMode;
