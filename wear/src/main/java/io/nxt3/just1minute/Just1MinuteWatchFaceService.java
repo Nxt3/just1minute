@@ -45,7 +45,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
     //Supported complication types
     public static final int[][] COMPLICATION_SUPPORTED_TYPES = {
             {
-                    ComplicationData.TYPE_RANGED_VALUE,
                     ComplicationData.TYPE_LONG_TEXT,
                     ComplicationData.TYPE_ICON,
                     ComplicationData.TYPE_SHORT_TEXT,
@@ -615,7 +614,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final int centerYInt = Math.round(centerY);
 
             //creates the width to the Rect
-            final int magicNumber = Math.round(dpToPx(mContext, 27));
+            final int magicNumber = Math.round(dpToPx(mContext, 26));
 
             return new Rect(centerXInt - radius - magicNumber,
                     centerYInt - radius,
@@ -739,6 +738,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 matrix.setSaturation(0);
                 complicationDrawable.setImageColorFilterAmbient(new ColorMatrixColorFilter(matrix));
 
+                //If the border is drawn...
                 if (mShowComplicationBorder) {
                     complicationDrawable
                             .setBorderStyleActive(ComplicationDrawable.BORDER_STYLE_SOLID);
@@ -760,13 +760,13 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                             .setBorderRadiusActive((int) HelperFunctions.dpToPx(mContext, 50));
                     complicationDrawable
                             .setBorderRadiusAmbient((int) HelperFunctions.dpToPx(mContext, 50));
-                } else {
+                } else { //if the border is NOT drawn...
                     complicationDrawable
                             .setBorderStyleActive(ComplicationDrawable.BORDER_STYLE_NONE);
                     complicationDrawable
                             .setBorderStyleAmbient(ComplicationDrawable.BORDER_STYLE_NONE);
 
-                    final float textSize = 12f;
+                    final float textSize = 14f;
                     complicationDrawable
                             .setTextSizeActive(HelperFunctions.spToPx(mContext, textSize));
                     complicationDrawable

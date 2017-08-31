@@ -48,7 +48,6 @@
     <PreferenceScreen
         android:icon="@drawable/ic_color_lens_black_24dp"
         android:key="settings_hands_screen"
-        android:summary="@string/settings_colors_and_font_summary"
         android:title="@string/settings_colors_and_font_title">
 
         <PreferenceCategory android:title="@string/settings_ticks_category">
