@@ -31,6 +31,8 @@
     <string name="settings_background_color">Color</string>
     <string name="settings_background_wallpaper">Wallpaper</string>
     <string name="settings_misc_category">Misc</string>
+    <string name="settings_hide_hour_ticks">Hide hour ticks</string>
+    <string name="settings_hide_hour_ticks_summary">Only display current hour tick</string>
 
     <!--Fonts-->
     <string name="settings_roboto_regular">Roboto Regular</string>

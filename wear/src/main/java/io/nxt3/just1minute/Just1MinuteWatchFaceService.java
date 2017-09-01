@@ -141,6 +141,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         //Other settings
         private boolean mShowComplicationBorder;
+        private boolean mHideHourTicks;
 
         //Notification indicators
         private boolean mShowNotificationIndicator;
@@ -353,7 +354,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 //If the current hour is at the index, then draw the hour tick instead
                 if (currentHour == tickIndex) {
                     canvas.drawPath(tickMarkPolygon, mHourTickPaint);
-                } else {
+                } else if (!mHideHourTicks) {
                     canvas.drawPath(tickMarkPolygon, mTickPaint);
                 }
                 canvas.rotate(30, mCenterX, mCenterY); //rotate the canvas 30 degrees each time
@@ -880,6 +881,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Complication borders & showing/hiding the second hand
             mShowComplicationBorder = prefs.getBoolean("settings_complication_border", true);
+            mHideHourTicks = prefs.getBoolean("settings_hide_hour_ticks", false);
 
             //Handles font selection
             final String minuteFont = prefs.getString("settings_minute_font", null);
@@ -905,7 +907,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             } else {
                 mMinuteTextFont = Typeface.create("sans-serif-regular", Typeface.NORMAL);
             }
-
 
             //Notification indicator
             final String notificationIndicator
