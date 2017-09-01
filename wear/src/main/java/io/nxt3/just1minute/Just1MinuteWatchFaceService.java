@@ -807,10 +807,11 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             //Default colors
-            final int defaultHour = getColor(R.color.white);
-            final int defaultTick = getColor(R.color.dark_gray);
-            final int defaultMinutes = getColor(R.color.white);
-            final int defaultBackground = getColor(R.color.black);
+            final int defaultHour = getColor(R.color.default_current_hour_tick);
+            final int defaultTick = getColor(R.color.default_hour_tick);
+            final int defaultMinutes = getColor(R.color.default_minute_text);
+            final int defaultBackground = getColor(R.color.default_background);
+            final int defaultComplications = getColor(R.color.default_complications);
 
             //Tick colors
             mHourTickColor = prefs.getInt("settings_hour_tick_color_value", defaultHour);
@@ -823,7 +824,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mBackgroundColor = prefs.getInt("settings_background_color_value", defaultBackground);
 
             //Complication colors
-            mComplicationColor = prefs.getInt("settings_complication_color_value", defaultHour);
+            mComplicationColor = prefs.getInt("settings_complication_color_value", defaultComplications);
             mComplicationTitleColor = Color.argb(Math.round(169), Color.red(mComplicationColor),
                     Color.green(mComplicationColor), Color.blue(mComplicationColor));
             mComplicationBorderColor = Color.argb(Math.round(69), Color.red(mComplicationColor),
@@ -842,10 +843,11 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             //Default night mode colors
-            final int defaultHour = getColor(R.color.default_color);
-            final int defaultTick = getColor(R.color.dark_gray);
-            final int defaultMinutes = getColor(R.color.default_color);
-            final int defaultBackground = getColor(R.color.black);
+            final int defaultHour = getColor(R.color.default_hour_tick_night_mode);
+            final int defaultTick = getColor(R.color.default_hour_tick_night_mode);
+            final int defaultMinutes = getColor(R.color.default_minute_text_night_mode);
+            final int defaultBackground = getColor(R.color.default_background_night_mode);
+            final int defaultComplications = getColor(R.color.default_complications_night_mode);
 
             //Tick colors
             mHourTickColor = prefs.getInt("settings_hour_tick_night_mode_color_value", defaultHour);
@@ -858,7 +860,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mBackgroundColor = prefs.getInt("settings_background_night_mode_color_value", defaultBackground);
 
             //Complication colors
-            mComplicationColor = prefs.getInt("settings_complication_night_mode_color_value", defaultTick);
+            mComplicationColor = prefs.getInt("settings_complication_night_mode_color_value", defaultComplications);
             mComplicationTitleColor = Color.argb(Math.round(169), Color.red(mComplicationColor),
                     Color.green(mComplicationColor), Color.blue(mComplicationColor));
             mComplicationBorderColor = Color.argb(Math.round(69), Color.red(mComplicationColor),

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="color_names">
-        <item>@string/settings_default_color</item>
-
         <item>@string/settings_red</item>
         <item>@string/settings_dark_red</item>
 
@@ -56,9 +54,10 @@
         <item>@string/settings_brown</item>
         <item>@string/settings_dark_brown</item>
 
+        <item>@string/settings_light_gray</item>
         <item>@string/settings_gray</item>
         <item>@string/settings_dark_gray</item>
-        <item>@string/settings_dark_gray_alt</item>
+        <item>@string/settings_darker_gray</item>
 
         <item>@string/settings_blue_gray</item>
         <item>@string/settings_dark_blue_gray</item>
@@ -67,8 +66,6 @@
         <item>@string/settings_white</item>
     </array>
     <array name="color_values">
-        <item>@color/default_color</item>
-
         <item>@color/red</item>
         <item>@color/dark_red</item>
 
@@ -122,9 +119,10 @@
         <item>@color/brown</item>
         <item>@color/dark_brown</item>
 
+        <item>@color/light_gray</item>
         <item>@color/gray</item>
         <item>@color/dark_gray</item>
-        <item>@color/dark_gray_alt</item>
+        <item>@color/darker_gray</item>
 
         <item>@color/blue_gray</item>
         <item>@color/dark_blue_gray</item>

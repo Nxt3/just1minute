@@ -117,16 +117,18 @@ public class SettingsFragment extends PreferenceFragment
                 = getPreferenceScreen().getSharedPreferences().edit();
 
         //Default colors
-        final int defaultHour = mContext.getColor(R.color.white);
-        final int defaultTick = mContext.getColor(R.color.dark_gray);
-        final int defaultMinutes = mContext.getColor(R.color.white);
-        final int defaultBackground = mContext.getColor(R.color.black);
+        final int defaultHour = mContext.getColor(R.color.default_current_hour_tick);
+        final int defaultTick = mContext.getColor(R.color.default_hour_tick);
+        final int defaultMinutes = mContext.getColor(R.color.default_minute_text);
+        final int defaultBackground = mContext.getColor(R.color.default_background);
+        final int defaultComplications = mContext.getColor(R.color.default_complications);
 
         //Default night mode colors
-        final int defaultNightModeHour = mContext.getColor(R.color.default_color);
-        final int defaultNightModeTicks = mContext.getColor(R.color.dark_gray);
-        final int defaultNightModeMinutes = mContext.getColor(R.color.default_color);
-        final int defaultNightModeBackground = mContext.getColor(R.color.black);
+        final int defaultNightModeHour = mContext.getColor(R.color.default_hour_tick_night_mode);
+        final int defaultNightModeTick = mContext.getColor(R.color.default_hour_tick_night_mode);
+        final int defaultNightModeMinutes = mContext.getColor(R.color.default_minute_text_night_mode);
+        final int defaultNightModeBackground = mContext.getColor(R.color.default_background_night_mode);
+        final int defaultNightModeComplications = mContext.getColor(R.color.default_complications_night_mode);
 
         switch (preference.getKey()) {
             case "settings_top_complication":
@@ -144,13 +146,13 @@ public class SettingsFragment extends PreferenceFragment
 
             case "settings_complication_color":
                 createColorPreferenceActivityIntent(mContext, "settings_complication_color_value",
-                        defaultHour, COMPLICATION_COLOR_REQ);
+                        defaultComplications, COMPLICATION_COLOR_REQ);
                 break;
 
             case "settings_complication_night_mode_color":
                 createColorPreferenceActivityIntent(mContext,
                         "settings_complication_night_mode_color_value",
-                        defaultNightModeHour, COMPLICATION_NIGHT_MODE_COLOR_REQ);
+                        defaultNightModeComplications, COMPLICATION_NIGHT_MODE_COLOR_REQ);
                 break;
 
             case "settings_hour_tick_color":
@@ -172,7 +174,7 @@ public class SettingsFragment extends PreferenceFragment
             case "settings_tick_night_mode_color":
                 createColorPreferenceActivityIntent(mContext,
                         "settings_tick_night_mode_color_value",
-                        defaultNightModeTicks, TICK_NIGHT_MODE_COLOR_REQ);
+                        defaultNightModeTick, TICK_NIGHT_MODE_COLOR_REQ);
                 break;
 
             case "settings_minute_text_color":
@@ -250,13 +252,13 @@ public class SettingsFragment extends PreferenceFragment
 
             case "settings_reset_night_mode_colors":
                 editor.putString("settings_complication_night_mode_color", getString(R.string.settings_dark_gray));
-                editor.putInt("settings_complication_night_mode_color_value", defaultNightModeTicks);
+                editor.putInt("settings_complication_night_mode_color_value", defaultNightModeComplications);
 
                 editor.putString("settings_hour_tick_night_mode_color", getString(R.string.settings_default_color));
                 editor.putInt("settings_hour_tick_night_mode_color_value", defaultNightModeHour);
 
                 editor.putString("settings_tick_night_mode_color", getString(R.string.settings_dark_gray));
-                editor.putInt("settings_tick_night_mode_color_value", defaultNightModeTicks);
+                editor.putInt("settings_tick_night_mode_color_value", defaultNightModeTick);
 
                 editor.putString("settings_minute_text_night_mode_color", getString(R.string.settings_default_color));
                 editor.putInt("settings_minute_text_night_mode_color_value", defaultNightModeMinutes);

@@ -89,6 +89,19 @@
     <string name="settings_about_view_changelog_summary">Open changelog on phone</string>
     <string name="settings_about_opening_toast">Opening on phone&#8230;</string>
 
+    <!--Default colors-->
+    <string name="settings_default_current_hour_tick_color">@string/settings_white</string>
+    <string name="settings_default_hour_tick_color">@string/settings_dark_gray</string>
+    <string name="settings_default_minute_text_color">@string/settings_white</string>
+    <string name="settings_default_background_color">@string/settings_black</string>
+    <string name="settings_default_complication_color">@string/settings_gray</string>
+    <string name="settings_default_current_hour_tick_night_mode_color">@string/settings_gray</string>
+    <string name="settings_default_hour_tick_night_mode_color">@string/settings_dark_gray</string>
+    <string name="settings_default_minute_text_night_mode_color">@string/settings_gray</string>
+    <string name="settings_default_background_night_mode_color">@string/settings_black</string>
+    <string name="settings_default_complication_night_mode_color">@string/settings_gray</string>
+
+
     <!--Normal Colors-->
     <string name="settings_default_color">Default color</string>
     <string name="settings_red">Red</string>
@@ -109,6 +122,7 @@
     <string name="settings_orange">Orange</string>
     <string name="settings_deep_orange">Deep orange</string>
     <string name="settings_brown">Brown</string>
+    <string name="settings_light_gray">Light gray</string>
     <string name="settings_gray">Gray</string>
     <string name="settings_blue_gray">Blue gray</string>
 
@@ -132,7 +146,7 @@
     <string name="settings_dark_deep_orange">Dark deep orange</string>
     <string name="settings_dark_brown">Dark brown</string>
     <string name="settings_dark_gray">Dark gray</string>
-    <string name="settings_dark_gray_alt">Dark gray (alt)</string>
+    <string name="settings_darker_gray">Darker gray</string>
     <string name="settings_dark_blue_gray">Dark blue gray</string>
 
     <string name="settings_black">Black</string>
