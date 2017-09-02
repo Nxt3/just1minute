@@ -289,7 +289,7 @@ public class SettingsFragment extends PreferenceFragment
                 Intent openChangelogIntent
                         = new Intent(Intent.ACTION_VIEW)
                         .addCategory(Intent.CATEGORY_BROWSABLE)
-                        .setData(Uri.parse("https://github.com/Nxt3/IO_Classic_WatchFace/blob/master/CHANGELOG.md"));
+                        .setData(Uri.parse("https://github.com/Nxt3/just1minute/releases"));
 
                 RemoteIntent.startRemoteActivity(mContext, openChangelogIntent, null);
                 Toast.makeText(mContext, getString(R.string.settings_about_opening_toast),
