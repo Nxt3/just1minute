@@ -3,7 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "io.nxt3.just1minute"
         minSdkVersion 25
@@ -37,6 +37,6 @@ dependencies {
     provided 'com.google.android.wearable:wearable:2.0.2'
     compile 'com.google.android.support:wearable:2.0.2'
 
-    compile 'com.google.android.gms:play-services-wearable:10.2.6'
+    compile 'com.google.android.gms:play-services-wearable:11.0.4'
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
 }

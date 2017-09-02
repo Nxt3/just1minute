@@ -191,7 +191,7 @@
                         android:title="@string/settings_hour_tick_color">
                         <extra
                             android:name="default"
-                            android:value="@string/settings_default_hour_tick_night_mode_color" />
+                            android:value="@string/settings_default_current_hour_tick_night_mode_color" />
                     </Preference>
 
                     <Preference

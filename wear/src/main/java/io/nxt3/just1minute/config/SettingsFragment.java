@@ -124,7 +124,7 @@ public class SettingsFragment extends PreferenceFragment
         final int defaultComplications = mContext.getColor(R.color.default_complications);
 
         //Default night mode colors
-        final int defaultNightModeHour = mContext.getColor(R.color.default_hour_tick_night_mode);
+        final int defaultNightModeHour = mContext.getColor(R.color.default_current_hour_tick_night_mode);
         final int defaultNightModeTick = mContext.getColor(R.color.default_hour_tick_night_mode);
         final int defaultNightModeMinutes = mContext.getColor(R.color.default_minute_text_night_mode);
         final int defaultNightModeBackground = mContext.getColor(R.color.default_background_night_mode);

@@ -343,22 +343,38 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final float tickLength = scalePosition(mCenterX, 7.3f);
             final float tickOffset = scalePosition(mCenterX, 32f);
 
-            for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
-                final Path tickMarkPolygon = new Path();
-                tickMarkPolygon.moveTo(mCenterX - topTickWidth, tickOffset); //top left
-                tickMarkPolygon.lineTo(mCenterX + topTickWidth, tickOffset); //top right
-                tickMarkPolygon.lineTo(mCenterX + bottomTickWidth, tickOffset + tickLength); //bottom right
-                tickMarkPolygon.lineTo(mCenterX - bottomTickWidth, tickOffset + tickLength); //bottom left
-                tickMarkPolygon.close();
+            final Path tickMarkPolygon = createTickPath(mCenterX, topTickWidth, bottomTickWidth,
+                    tickOffset, tickLength);
 
+            for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
                 //If the current hour is at the index, then draw the hour tick instead
                 if (currentHour == tickIndex) {
-                    canvas.drawPath(tickMarkPolygon, mHourTickPaint);
+                    if (mHideHourTicks) {
+                        canvas.drawPath(tickMarkPolygon, mHourTickPaint);
+                    } else {
+                        //If the hour ticks are shown, increase the size of the current hour tick
+                        final float sizeIncrease = 2f;
+                        canvas.drawPath(createTickPath(mCenterX, topTickWidth + sizeIncrease,
+                                bottomTickWidth + sizeIncrease, tickOffset, tickLength),
+                                mHourTickPaint);
+                    }
                 } else if (!mHideHourTicks) {
                     canvas.drawPath(tickMarkPolygon, mTickPaint);
                 }
                 canvas.rotate(30, mCenterX, mCenterY); //rotate the canvas 30 degrees each time
             }
+        }
+
+        private Path createTickPath(float x, float topTickWidth, float bottomTickWidth,
+                                    float tickOffset, float tickLength) {
+            final Path tickMarkPolygon = new Path();
+            tickMarkPolygon.moveTo(x - topTickWidth, tickOffset); //top left
+            tickMarkPolygon.lineTo(x + topTickWidth, tickOffset); //top right
+            tickMarkPolygon.lineTo(x + bottomTickWidth, tickOffset + tickLength); //bottom right
+            tickMarkPolygon.lineTo(x - bottomTickWidth, tickOffset + tickLength); //bottom left
+            tickMarkPolygon.close();
+
+            return tickMarkPolygon;
         }
 
         /**
@@ -844,7 +860,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             //Default night mode colors
-            final int defaultHour = getColor(R.color.default_hour_tick_night_mode);
+            final int defaultHour = getColor(R.color.default_current_hour_tick_night_mode);
             final int defaultTick = getColor(R.color.default_hour_tick_night_mode);
             final int defaultMinutes = getColor(R.color.default_minute_text_night_mode);
             final int defaultBackground = getColor(R.color.default_background_night_mode);
