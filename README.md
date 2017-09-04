@@ -4,7 +4,7 @@
 width="200"
     hspace="10" vspace="10">
 
-[Minimalistic watch face inspired by 3TTMM](http://i.imgur.com/ELY80tT.png)
+Minimalistic watch face inspired by 3TTMM
 
 **Compatible with Android Wear 2.0+ ONLY**
 
