@@ -28,5 +28,5 @@ Minimalistic watch face inspired by 3TTMM
 - [Google Fonts](https://fonts.google.com/) for providing the fonts I used: Short Stack and Roboto Mono.
 
 ### License
-IO Classic is licensed under the [GNU v3 Public License](LICENSE); I ask that you don't redistribute it under your own name.
-Credit must be given to myself, and the original author, [FruitieX](https://github.com/FruitieX/iowatch).
+just1minute is licensed under the [GNU v3 Public License](LICENSE); I ask that you don't redistribute it under your own name.
+Credit must be given to me if you plan to use any part of this code.
