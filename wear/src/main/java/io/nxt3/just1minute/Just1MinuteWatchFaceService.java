@@ -138,6 +138,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private Typeface mMinuteTextFont;
         private final Typeface mAmbientFont
                 = Typeface.create("sans-serif-thin", Typeface.NORMAL);
+        private boolean mIsHandwrittenFont = false;
 
         //Other settings
         private boolean mShowComplicationBorder;
@@ -365,6 +366,16 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Creates the tick Path
+         *
+         * @param x               starting position
+         * @param topTickWidth    width of top of the polygon
+         * @param bottomTickWidth width of the bottom of the polygon
+         * @param tickOffset      offset from the edge to start drawing the tick
+         * @param tickLength      length of the tick
+         * @return Path for the tick
+         */
         private Path createTickPath(float x, float topTickWidth, float bottomTickWidth,
                                     float tickOffset, float tickLength) {
             final Path tickMarkPolygon = new Path();
@@ -388,10 +399,18 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final String minuteString = String.format(Locale.getDefault(),
                     "%02d", mCalendar.get(Calendar.MINUTE));
 
-            final float yPos = (mCenterY
-                    - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
-                    //move the text ever-so-slightly upwards to make it look more centered
-                    - scalePosition(mCenterX, 192f));
+            float yPos;
+            if (mIsHandwrittenFont) {
+                yPos = (mCenterY
+                        - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
+                        //move the text down since handwritten fonts are skewed upwards for some reason
+                        + scalePosition(mCenterX, 32f));
+            } else {
+                yPos = (mCenterY
+                        - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
+                        //move the text ever-so-slightly upwards to make it look more centered
+                        - scalePosition(mCenterX, 192f));
+            }
 
             canvas.drawText(minuteString,
                     mCenterX,
@@ -901,6 +920,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Handles font selection
             final String minuteFont = prefs.getString("settings_minute_font", null);
+
+            mIsHandwrittenFont = false;
+
             if (minuteFont != null) {
                 switch (minuteFont) {
                     case "0":
@@ -917,7 +939,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                         break;
                     case "3":
                         mMinuteTextFont
-                                = Typeface.createFromAsset(getAssets(), "ShortStack-Regular.ttf");
+                                = Typeface.createFromAsset(getAssets(), "Neucha.ttf");
+                        mIsHandwrittenFont = true;
                         break;
                 }
             } else {
