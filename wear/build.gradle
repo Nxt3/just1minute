@@ -8,8 +8,8 @@ android {
         applicationId "io.nxt3.just1minute"
         minSdkVersion 25
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
     }
     buildTypes {
         release {
