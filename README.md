@@ -20,12 +20,13 @@ Minimalistic watch face inspired by 3TTMM
 ## Features
   - Complication support
   - Customizable colors
+  - User selected fonts
   - Night mode (auto or manual)
   - Notification indicator
   - Full ambient mode support
 
 ### Special thanks
-- [Google Fonts](https://fonts.google.com/) for providing the fonts I used: Short Stack and Roboto Mono.
+- [Google Fonts](https://fonts.google.com/) for providing the fonts I used: Neucha and Roboto Mono.
 
 ### License
 just1minute is licensed under the [GNU v3 Public License](LICENSE); I ask that you don't redistribute it under your own name.
