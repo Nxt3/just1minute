@@ -936,7 +936,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     case "2":
                         mMinuteTextFont
                                 = Typeface.createFromAsset(getAssets(), "RobotoMono-Medium.ttf");
-                        mFontNeedsAdjustment = true;
                         break;
                     case "3":
                         mMinuteTextFont
