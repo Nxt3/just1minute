@@ -138,7 +138,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private Typeface mMinuteTextFont;
         private final Typeface mAmbientFont
                 = Typeface.create("sans-serif-thin", Typeface.NORMAL);
-        private boolean mIsHandwrittenFont = false;
+        private boolean mFontNeedsAdjustment = false;
 
         //Other settings
         private boolean mShowComplicationBorder;
@@ -400,7 +400,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     "%02d", mCalendar.get(Calendar.MINUTE));
 
             float yPos;
-            if (mIsHandwrittenFont) {
+            if (mFontNeedsAdjustment) {
                 yPos = (mCenterY
                         - ((mMinuteTextPaint.descent() + mMinuteTextPaint.ascent()) / 2f)
                         //move the text down since handwritten fonts are skewed upwards for some reason
@@ -921,7 +921,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             //Handles font selection
             final String minuteFont = prefs.getString("settings_minute_font", null);
 
-            mIsHandwrittenFont = false;
+            mFontNeedsAdjustment = false;
 
             if (minuteFont != null) {
                 switch (minuteFont) {
@@ -936,11 +936,12 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     case "2":
                         mMinuteTextFont
                                 = Typeface.createFromAsset(getAssets(), "RobotoMono-Medium.ttf");
+                        mFontNeedsAdjustment = true;
                         break;
                     case "3":
                         mMinuteTextFont
                                 = Typeface.createFromAsset(getAssets(), "Neucha.ttf");
-                        mIsHandwrittenFont = true;
+                        mFontNeedsAdjustment = true;
                         break;
                 }
             } else {
