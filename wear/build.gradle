@@ -8,8 +8,8 @@ android {
         applicationId "io.nxt3.just1minute"
         minSdkVersion 25
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.1"
+        versionCode 5
+        versionName "1.2"
     }
     buildTypes {
         release {
@@ -38,5 +38,5 @@ dependencies {
     compile 'com.google.android.support:wearable:2.0.5'
 
     compile 'com.google.android.gms:play-services-wearable:11.0.4'
-    compile 'com.anjlab.android.iab.v3:library:1.0.+'
+    compile 'com.anjlab.android.iab.v3:library:1.0.44'
 }

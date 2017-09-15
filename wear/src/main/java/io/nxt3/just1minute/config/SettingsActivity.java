@@ -16,6 +16,7 @@ public class SettingsActivity  extends PreferenceActivity implements BillingProc
 
     public void donate(Activity activity, String productId) {
         mBillingProcessor.purchase(activity, productId);
+        mBillingProcessor.consumePurchase(productId);
     }
 
     @Override
