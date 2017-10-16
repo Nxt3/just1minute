@@ -832,6 +832,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         public void onNotificationCountChanged(int count) {
             super.onNotificationCountChanged(count);
             mNotificationCount = count;
+            invalidate();
         }
 
 
