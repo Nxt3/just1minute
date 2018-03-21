@@ -1,6 +1,5 @@
 package io.nxt3.just1minute;
 
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -174,6 +173,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                             | Gravity.TOP)
                     .setViewProtectionMode(WatchFaceStyle.PROTECT_STATUS_BAR
                             | WatchFaceStyle.PROTECT_HOTWORD_INDICATOR)
+                    .setHideNotificationIndicator(true)
                     .setAcceptsTapEvents(true)
                     .build());
 
