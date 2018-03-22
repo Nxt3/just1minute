@@ -503,6 +503,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         @Override
         public void onUnreadCountChanged (int count) {
+            super.onUnreadCountChanged(count);
+
             if (mNotificationIndicatorUnread) {
                 invalidate(); //refresh when the count changes
             }
@@ -510,6 +512,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         @Override
         public void onNotificationCountChanged (int count) {
+            super.onNotificationCountChanged(count);
+
             if (mNotificationIndicatorAll) {
                 invalidate(); //refresh when the count changes
             }
