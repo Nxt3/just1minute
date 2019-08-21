@@ -118,6 +118,17 @@
         </PreferenceCategory>
 
         <PreferenceCategory android:title="@string/settings_misc_category">
+            <ListPreference
+                android:defaultValue="0"
+                android:dialogTitle=""
+                android:entries="@array/hour_tick_style_items"
+                android:entryValues="@array/hour_tick_style_values"
+                android:icon="@drawable/ic_style_black_24dp"
+                android:key="settings_hour_tick_style"
+                android:negativeButtonText=""
+                android:summary="%s"
+                android:title="@string/settings_hour_tick_style" />
+
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="settings_hide_hour_ticks"
