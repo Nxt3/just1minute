@@ -137,6 +137,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         //Other settings
         private boolean mShowComplicationBorder;
         private boolean mHideHourTicks;
+        private boolean mTickHourTicks;
+        private boolean mNumberHourTicks;
 
         //Notification indicators
         private boolean mShowNotificationIndicator;
@@ -917,6 +919,12 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             //Complication borders & showing/hiding the second hand
             mShowComplicationBorder = prefs.getBoolean("settings_complication_border", true);
             mHideHourTicks = prefs.getBoolean("settings_hide_hour_ticks", false);
+
+            final String tickStyle = prefs.getString("settings_hour_tick_style", null);
+            if (tickStyle != null) {
+                mTickHourTicks = tickStyle.equals("0");
+                mNumberHourTicks = tickStyle.equals("1");
+            }
 
             //Handles font selection
             final String minuteFont = prefs.getString("settings_minute_font", null);
