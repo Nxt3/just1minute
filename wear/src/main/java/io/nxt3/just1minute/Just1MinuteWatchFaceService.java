@@ -46,7 +46,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
     //Supported complication types
     public static final int[][] COMPLICATION_SUPPORTED_TYPES = {
             {
-                    ComplicationData.TYPE_LONG_TEXT,
                     ComplicationData.TYPE_ICON,
                     ComplicationData.TYPE_SHORT_TEXT,
                     ComplicationData.TYPE_SMALL_IMAGE
