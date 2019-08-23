@@ -65,7 +65,8 @@ public class SettingsFragment extends PreferenceFragment
     private boolean mManualNightModeEnabled;
 
     private boolean mShowOrbitingHour;
-    private String mHourTextColor = "";
+    private String mHourTextColorText = "";
+    private int mHourTextColor;
 
     private ProviderInfoRetriever mProviderInfoRetriever;
 
@@ -95,8 +96,11 @@ public class SettingsFragment extends PreferenceFragment
         findPreference("settings_hour_text_color").setEnabled(mShowOrbitingHour);
 
         //Get the setting to restore to if the user toggles "Show Orbiting Hour" in the same session
-        mHourTextColor = getPreferenceScreen().getSharedPreferences()
+        mHourTextColorText = getPreferenceScreen().getSharedPreferences()
                 .getString("settings_hour_text_color", getString(R.string.settings_white));
+        mHourTextColor = getPreferenceScreen().getSharedPreferences()
+                .getInt("settings_hour_text_color_value",
+                        mContext.getColor(R.color.default_current_hour_tick));
 
         //Set the current version
         getPreferenceScreen().findPreference("app_version").setSummary(BuildConfig.VERSION_NAME);
@@ -221,18 +225,24 @@ public class SettingsFragment extends PreferenceFragment
                 findPreference("settings_hour_text_color").setEnabled(mShowOrbitingHour);
 
                 if (!mShowOrbitingHour) {
-                    mHourTextColor = getPreferenceScreen().getSharedPreferences()
+                    mHourTextColorText = getPreferenceScreen().getSharedPreferences()
                             .getString("settings_hour_text_color",
                                     getString(R.string.settings_white));
+                    mHourTextColor = getPreferenceScreen().getSharedPreferences()
+                            .getInt("settings_hour_text_color_value",
+                                    defaultHourText);
 
-                    boolean committed = editor.remove("settings_hour_text_color").commit();
-                    if (committed) {
+                    boolean committedColor = editor.remove("settings_hour_text_color").commit();
+                    boolean committedColorValue = editor.remove("settings_hour_text_color_value").commit();
+                    if (committedColor && committedColorValue) {
                         editor.putString("settings_hour_text_color",
                                 getString(R.string.settings_white));
+                        editor.putInt("settings_hour_text_color_value", defaultHourText);
                     }
                 } else {
-                    if (!mHourTextColor.equals(getString(R.string.settings_white))) {
-                        editor.putString("settings_hour_text_color", mHourTextColor).commit();
+                    if (!mHourTextColorText.equals(getString(R.string.settings_white)) && mHourTextColor != defaultHourText) {
+                        editor.putString("settings_hour_text_color", mHourTextColorText).commit();
+                        editor.putInt("settings_hour_text_color_value", mHourTextColor).commit();
                     }
                 }
                 break;
@@ -244,7 +254,7 @@ public class SettingsFragment extends PreferenceFragment
 
             case "settings_hour_text_night_mode_color":
                 createColorPreferenceActivityIntent(mContext,
-                        "settings_hour_text_night_mode_color",
+                        "settings_hour_text_night_mode_color_value",
                         defaultNightModeHourText, HOUR_TEXT_NIGHT_MODE_COLOR_REQ);
                 break;
 

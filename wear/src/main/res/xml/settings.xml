@@ -140,7 +140,6 @@
                 android:summary="@string/settings_hide_hour_ticks_summary"
                 android:title="@string/settings_hide_hour_ticks" />
         </PreferenceCategory>
-
     </PreferenceScreen>
 
     <!--Night mode-->
