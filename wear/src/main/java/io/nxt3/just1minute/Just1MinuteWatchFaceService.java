@@ -136,7 +136,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
         //Other settings
         private boolean mShowComplicationBorder;
-        private boolean mHideHourTicks;
+        private boolean mHideTicks;
         private boolean mTickHourTicks;
         private boolean mNumberHourTicks;
 
@@ -347,19 +347,23 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
                 //If the current hour is at the index, then draw the hour tick instead
                 if (currentHour == tickIndex) {
-                    if (mHideHourTicks) {
+                    if (mHideTicks) {
                         canvas.drawPath(tickMarkPolygon, mHourTickPaint);
-                    } else {
+                    } else if (mTickHourTicks) {
                         //If the hour ticks are shown, increase the size of the current hour tick
                         final float sizeIncrease = 2f;
                         canvas.drawPath(createTickPath(mCenterX, topTickWidth + sizeIncrease,
                                 bottomTickWidth + sizeIncrease, tickOffset, tickLength),
                                 mHourTickPaint);
                     }
-                } else if (!mHideHourTicks) {
+                } else if (!mHideTicks) {
                     canvas.drawPath(tickMarkPolygon, mTickPaint);
                 }
                 canvas.rotate(30, mCenterX, mCenterY); //rotate the canvas 30 degrees each time
+            }
+
+            if (mNumberHourTicks) {
+                this.drawNumberHourTick(canvas);
             }
         }
 
@@ -383,6 +387,21 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             tickMarkPolygon.close();
 
             return tickMarkPolygon;
+        }
+
+        private void drawNumberHourTick(Canvas canvas) {
+            final float seconds = mCalendar.get(Calendar.SECOND)
+                    + mCalendar.get(Calendar.MILLISECOND) / 1000f;
+            final float minutes = mCalendar.get(Calendar.MINUTE) + seconds / 60f;
+            final float hours = mCalendar.get(Calendar.HOUR) + minutes / 60f;
+            final float hourRotation = (-360f * (hours / 12f)) + 90;
+
+            final double rads = Math.toRadians(hourRotation);
+            final float offset = 9.3f;
+            final float xPos = Math.round((float) (mCenterX + Math.cos(rads) * (mCenterX - scalePosition(mCenterX, offset))));
+            final float yPos = Math.round((float) (mCenterY - Math.sin(rads) * (mCenterY - scalePosition(mCenterY, offset))));
+
+            canvas.drawCircle(xPos, yPos, mCenterX * 0.16f, mHourTickPaint);
         }
 
         /**
@@ -918,7 +937,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Complication borders & showing/hiding the second hand
             mShowComplicationBorder = prefs.getBoolean("settings_complication_border", true);
-            mHideHourTicks = prefs.getBoolean("settings_hide_hour_ticks", false);
+            mHideTicks = prefs.getBoolean("settings_hide_hour_ticks", false);
 
             final String tickStyle = prefs.getString("settings_hour_tick_style", null);
             if (tickStyle != null) {
