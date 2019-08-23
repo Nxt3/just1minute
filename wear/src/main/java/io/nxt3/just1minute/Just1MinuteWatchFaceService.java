@@ -103,12 +103,15 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private int mTickColor;
         private int mMinuteTextColor;
         private int mBackgroundColor;
+        private int mOrbitingHourTextColor;
 
         //Paint objects for each component
         private Paint mHourTickPaint;
         private Paint mTickPaint;
         private Paint mMinuteTextPaint;
         private Paint mBackgroundPaint;
+        private Paint mOrbitingHourPaint;
+        private Paint mOrbitingHourTextPaint;
 
         //Colors for each complication component
         private int mComplicationColor;
@@ -207,6 +210,16 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mMinuteTextPaint.setColor(mMinuteTextColor);
             mMinuteTextPaint.setTypeface(mMinuteTextFont);
             mMinuteTextPaint.setAntiAlias(true);
+
+            //Orbiting hour and text
+            mOrbitingHourPaint = mHourTickPaint;
+            mOrbitingHourPaint.setStrokeCap(Paint.Cap.ROUND);
+
+            mOrbitingHourTextPaint = new TextPaint();
+            mOrbitingHourTextPaint.setColor(mOrbitingHourTextColor);
+            mOrbitingHourTextPaint.setTextAlign(Paint.Align.CENTER);
+            mOrbitingHourTextPaint.setTypeface(mMinuteTextFont);
+            mOrbitingHourTextPaint.setAntiAlias(true);
         }
 
         /**
@@ -346,7 +359,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             for (int tickIndex = 0; tickIndex < 12; tickIndex++) {
                 //If the current hour is at the index, then draw the hour tick instead
                 if (currentHour == tickIndex) {
-                    if (mHideTicks) {
+                    if (mHideTicks && !mShowOrbitingHour) {
                         canvas.drawPath(tickMarkPolygon, mHourTickPaint);
                     } else if (!mShowOrbitingHour) {
                         //If the hour ticks are shown, increase the size of the current hour tick
@@ -354,6 +367,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                         canvas.drawPath(createTickPath(mCenterX, topTickWidth + sizeIncrease,
                                 bottomTickWidth + sizeIncrease, tickOffset, tickLength),
                                 mHourTickPaint);
+                    } else if (!mHideTicks) {
+                        canvas.drawPath(tickMarkPolygon, mTickPaint);
                     }
                 } else if (!mHideTicks) {
                     canvas.drawPath(tickMarkPolygon, mTickPaint);
@@ -362,7 +377,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             }
 
             if (mShowOrbitingHour) {
-                this.drawNumberHourTick(canvas);
+                this.drawOrbitingHour(canvas);
             }
         }
 
@@ -388,7 +403,18 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             return tickMarkPolygon;
         }
 
-        private void drawNumberHourTick(Canvas canvas) {
+        /**
+         * Handles drawing the orbiting hour circle and hour text
+         *
+         * @param canvas to draw to
+         */
+        private void drawOrbitingHour(Canvas canvas) {
+            final int currentHour = android.text.format.DateFormat.is24HourFormat(mContext)
+                    ? mCalendar.get(Calendar.HOUR_OF_DAY) : mCalendar.get(Calendar.HOUR);
+            final boolean textPosAdjust = currentHour < 9;
+            final String hourString = String.format(Locale.getDefault(),
+                    "%2d", currentHour);
+
             final float seconds = mCalendar.get(Calendar.SECOND)
                     + mCalendar.get(Calendar.MILLISECOND) / 1000f;
             final float minutes = mCalendar.get(Calendar.MINUTE) + seconds / 60f;
@@ -399,8 +425,12 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final float offset = 9.3f;
             final float xPos = Math.round((float) (mCenterX + Math.cos(rads) * (mCenterX - scalePosition(mCenterX, offset))));
             final float yPos = Math.round((float) (mCenterY - Math.sin(rads) * (mCenterY - scalePosition(mCenterY, offset))));
+            final float textXPos = textPosAdjust ? xPos - scalePosition(mCenterX, 81f) : xPos;
 
-            canvas.drawCircle(xPos, yPos, mCenterX * 0.16f, mHourTickPaint);
+            canvas.drawCircle(xPos, yPos, mCenterX * 0.16f, mOrbitingHourPaint);
+            canvas.drawText(hourString, textXPos,
+                    yPos - (mOrbitingHourTextPaint.descent()
+                            + mOrbitingHourTextPaint.ascent()) / 2, mOrbitingHourTextPaint);
         }
 
         /**
@@ -455,7 +485,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 canvas.drawCircle(xPos, yPos, mCenterX * 0.06f, mNotificationCirclePaint);
                 canvas.drawText(String.valueOf(count), xPos,
                         yPos - (mNotificationTextPaint.descent()
-                                + mNotificationTextPaint.ascent()) / 2, mNotificationTextPaint);
+                                + mNotificationTextPaint.ascent()) / 2, mOrbitingHourTextPaint);
             }
         }
 
@@ -704,6 +734,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             //Handle measuring the minute text size
             mMinuteTextPaint.setTextSize(scalePosition(mCenterX, 3.6f));
 
+            //Handle measuring the orbiting hour text size
+            mOrbitingHourTextPaint.setTextSize(scalePosition(mCenterX, 10f));
+
             //Handle measuring the notification text
             mNotificationTextPaint.setTextSize(scalePosition(mCenterX, 20f));
 
@@ -743,6 +776,13 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 mMinuteTextPaint.setColor(Color.WHITE);
                 mMinuteTextPaint.setTypeface(mAmbientFont);
 
+                if (mShowOrbitingHour) {
+                    mOrbitingHourPaint.setStyle(Paint.Style.STROKE);
+                    mOrbitingHourPaint.setColor(Color.WHITE);
+                    mOrbitingHourTextPaint.setColor(Color.WHITE);
+                    mOrbitingHourTextPaint.setTypeface(mAmbientFont);
+                }
+
                 if (mShowNotificationIndicator) {
                     mNotificationTextPaint.setColor(Color.WHITE);
                     mNotificationCirclePaint.setColor(Color.TRANSPARENT);
@@ -752,6 +792,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     mHourTickPaint.setAntiAlias(false);
                     mTickPaint.setAntiAlias(false);
                     mMinuteTextPaint.setAntiAlias(false);
+
+                    if (mShowOrbitingHour) {
+                        mOrbitingHourTextPaint.setAntiAlias(false);
+                    }
 
                     if (mShowNotificationIndicator) {
                         mNotificationTextPaint.setAntiAlias(false);
@@ -770,6 +814,11 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 mMinuteTextPaint.setColor(mMinuteTextColor);
                 mMinuteTextPaint.setTypeface(mMinuteTextFont);
 
+                if (mShowOrbitingHour) {
+                    mOrbitingHourTextPaint.setColor(mOrbitingHourTextColor);
+                    mOrbitingHourTextPaint.setTypeface(mMinuteTextFont);
+                }
+
                 if (mShowNotificationIndicator) {
                     mNotificationTextPaint.setColor(mNotificationTextColor);
                     mNotificationCirclePaint.setColor(mNotificationCircleColor);
@@ -779,6 +828,10 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     mHourTickPaint.setAntiAlias(true);
                     mTickPaint.setAntiAlias(true);
                     mMinuteTextPaint.setAntiAlias(true);
+
+                    if (mShowOrbitingHour) {
+                        mOrbitingHourTextPaint.setAntiAlias(true);
+                    }
 
                     if (mShowNotificationIndicator) {
                         mNotificationTextPaint.setAntiAlias(true);
@@ -879,6 +932,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             //Background colors
             mBackgroundColor = prefs.getInt("settings_background_color_value", defaultBackground);
 
+            //Orbiting hour text color
+            mOrbitingHourTextColor = prefs.getInt("settings_hour_text_color_value", defaultHour);
+
             //Complication colors
             mComplicationColor = prefs.getInt("settings_complication_color_value", defaultComplications);
             mComplicationTitleColor = Color.argb(Math.round(169), Color.red(mComplicationColor),
@@ -914,6 +970,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Background colors
             mBackgroundColor = prefs.getInt("settings_background_night_mode_color_value", defaultBackground);
+
+            //Orbiting hour text color
+            mOrbitingHourTextColor = prefs.getInt("settings_hour_text_night_mode_color_value", defaultHour);
 
             //Complication colors
             mComplicationColor = prefs.getInt("settings_complication_night_mode_color_value", defaultComplications);
