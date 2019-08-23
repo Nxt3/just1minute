@@ -176,7 +176,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             loadMiscPrefs();
 
-            if (!isInNightMode()) {
+            if (isNotNightMode()) {
                 loadColorPrefs();
             } else {
                 loadNightModeColorPrefs();
@@ -454,7 +454,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
                 loadMiscPrefs();
 
-                if (!isInNightMode()) {
+                if (isNotNightMode()) {
                     loadColorPrefs();
                 } else {
                     loadNightModeColorPrefs();
@@ -489,7 +489,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             }
 
             if (!mAmbient) {
-                if (!isInNightMode()) {
+                if (isNotNightMode()) {
                     loadColorPrefs();
                 } else {
                     loadNightModeColorPrefs();
@@ -546,7 +546,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                         if (centerBounds.contains(x, y)) {
                             mForceNightMode = !mForceNightMode; //toggle the boolean
 
-                            if (!isInNightMode()) {
+                            if (isNotNightMode()) {
                                 loadColorPrefs();
                             } else {
                                 loadNightModeColorPrefs();
@@ -1093,13 +1093,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
          *
          * @return whether or not night mode colors should be enabled
          */
-        private boolean isInNightMode() {
-            if (mNightModeEnabled) {
-                return isTimeInRange(mCalendar.getTimeInMillis(),
-                        mNightModeStartTimeMillis, mNightModeEndTimeMillis);
-            } else {
-                return mForceNightMode;
-            }
+        private boolean isNotNightMode() {
+            return mNightModeEnabled ? !isTimeInRange(mCalendar.getTimeInMillis(),
+                    mNightModeStartTimeMillis, mNightModeEndTimeMillis) : !mForceNightMode;
         }
     }
 }
