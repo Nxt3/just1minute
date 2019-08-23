@@ -137,8 +137,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         //Other settings
         private boolean mShowComplicationBorder;
         private boolean mHideTicks;
-        private boolean mTickHourTicks;
-        private boolean mNumberHourTicks;
+        private boolean mShowOrbitingHour;
 
         //Notification indicators
         private boolean mShowNotificationIndicator;
@@ -349,7 +348,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 if (currentHour == tickIndex) {
                     if (mHideTicks) {
                         canvas.drawPath(tickMarkPolygon, mHourTickPaint);
-                    } else if (mTickHourTicks) {
+                    } else if (!mShowOrbitingHour) {
                         //If the hour ticks are shown, increase the size of the current hour tick
                         final float sizeIncrease = 2f;
                         canvas.drawPath(createTickPath(mCenterX, topTickWidth + sizeIncrease,
@@ -362,7 +361,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 canvas.rotate(30, mCenterX, mCenterY); //rotate the canvas 30 degrees each time
             }
 
-            if (mNumberHourTicks) {
+            if (mShowOrbitingHour) {
                 this.drawNumberHourTick(canvas);
             }
         }
@@ -939,11 +938,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             mShowComplicationBorder = prefs.getBoolean("settings_complication_border", true);
             mHideTicks = prefs.getBoolean("settings_hide_hour_ticks", false);
 
-            final String tickStyle = prefs.getString("settings_hour_tick_style", null);
-            if (tickStyle != null) {
-                mTickHourTicks = tickStyle.equals("0");
-                mNumberHourTicks = tickStyle.equals("1");
-            }
+            mShowOrbitingHour = prefs.getBoolean("settings_show_orbiting_hour", false);
 
             //Handles font selection
             final String minuteFont = prefs.getString("settings_minute_font", null);

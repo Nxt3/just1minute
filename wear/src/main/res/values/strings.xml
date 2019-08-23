@@ -31,9 +31,11 @@
     <string name="settings_background_color">Color</string>
     <string name="settings_background_wallpaper">Wallpaper</string>
     <string name="settings_misc_category">Misc</string>
-    <string name="settings_hour_tick_style">Hour tick style</string>
+    <string name="settings_show_orbiting_hour">Orbiting hour</string>
+    <string name="settings_show_orbiting_hour_summary">Show a circle with the current hour</string>
     <string name="settings_hour_tick_style_tick">Ticks</string>
     <string name="settings_hour_tick_style_number">Number</string>
+    <string name="settings_hour_text_color">Hour text color</string>
     <string name="settings_hide_hour_ticks">Hide ticks</string>
     <string name="settings_hide_hour_ticks_summary">Only displays current hour tick</string>
 

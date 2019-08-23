@@ -118,16 +118,21 @@
         </PreferenceCategory>
 
         <PreferenceCategory android:title="@string/settings_misc_category">
-            <ListPreference
-                android:defaultValue="0"
-                android:dialogTitle=""
-                android:entries="@array/hour_tick_style_items"
-                android:entryValues="@array/hour_tick_style_values"
-                android:icon="@drawable/ic_style_black_24dp"
-                android:key="settings_hour_tick_style"
-                android:negativeButtonText=""
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="settings_show_orbiting_hour"
+                android:summary="@string/settings_show_orbiting_hour_summary"
+                android:title="@string/settings_show_orbiting_hour" />
+
+            <Preference
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:key="settings_hour_text_color"
                 android:summary="%s"
-                android:title="@string/settings_hour_tick_style" />
+                android:title="@string/settings_hour_text_color">
+                <extra
+                    android:name="default"
+                    android:value="@string/settings_default_current_hour_tick_color" />
+            </Preference>
 
             <SwitchPreference
                 android:defaultValue="false"
@@ -237,6 +242,18 @@
                         <extra
                             android:name="default"
                             android:value="@string/settings_default_background_night_mode_color" />
+                    </Preference>
+                </PreferenceCategory>
+
+                <PreferenceCategory android:title="@string/settings_misc_category">
+                    <Preference
+                        android:icon="@drawable/ic_color_lens_black_24dp"
+                        android:key="settings_hour_text_night_mode_color"
+                        android:summary="%s"
+                        android:title="@string/settings_hour_text_color">
+                        <extra
+                            android:name="default"
+                            android:value="@string/settings_default_current_hour_tick_night_mode_color" />
                     </Preference>
                 </PreferenceCategory>
             </PreferenceScreen>

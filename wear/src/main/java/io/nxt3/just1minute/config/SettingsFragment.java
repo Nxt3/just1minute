@@ -51,6 +51,7 @@ public class SettingsFragment extends PreferenceFragment
     private final int MINUTE_TEXT_COLOR_REQ = 12;
     private final int BACKGROUND_COLOR_REQ = 13;
     private final int COMPLICATION_COLOR_REQ = 14;
+    private final int HOUR_TEXT_COLOR_REQ = 21;
 
     //Night mode request codes
     private final int HOUR_TICK_NIGHT_MODE_COLOR_REQ = 15;
@@ -58,9 +59,13 @@ public class SettingsFragment extends PreferenceFragment
     private final int MINUTE_TEXT_NIGHT_MODE_COLOR_REQ = 17;
     private final int BACKGROUND_NIGHT_MODE_COLOR_REQ = 19;
     private final int COMPLICATION_NIGHT_MODE_COLOR_REQ = 20;
+    private final int HOUR_TEXT_NIGHT_MODE_COLOR_REQ = 22;
 
     private boolean mAutoNightModeEnabled;
     private boolean mManualNightModeEnabled;
+
+    private boolean mShowOrbitingHour;
+    private String mHourTextColor = "";
 
     private ProviderInfoRetriever mProviderInfoRetriever;
 
@@ -83,6 +88,15 @@ public class SettingsFragment extends PreferenceFragment
                 .setEnabled(!mAutoNightModeEnabled);
         findPreference("settings_night_mode_enabled")
                 .setEnabled(!mManualNightModeEnabled);
+
+        //Disable the "hour_text_color" setting if hour_tick_style isn't "number"
+        mShowOrbitingHour = getPreferenceScreen().getSharedPreferences()
+                .getBoolean("settings_show_orbiting_hour", false);
+        findPreference("settings_hour_text_color").setEnabled(mShowOrbitingHour);
+
+        //Get the setting to restore to if the user toggles "Show Orbiting Hour" in the same session
+        mHourTextColor = getPreferenceScreen().getSharedPreferences()
+                .getString("settings_hour_text_color", getString(R.string.settings_white));
 
         //Set the current version
         getPreferenceScreen().findPreference("app_version").setSummary(BuildConfig.VERSION_NAME);
@@ -122,6 +136,7 @@ public class SettingsFragment extends PreferenceFragment
         final int defaultMinutes = mContext.getColor(R.color.default_minute_text);
         final int defaultBackground = mContext.getColor(R.color.default_background);
         final int defaultComplications = mContext.getColor(R.color.default_complications);
+        final int defaultHourText = mContext.getColor(R.color.default_current_hour_tick);
 
         //Default night mode colors
         final int defaultNightModeHour = mContext.getColor(R.color.default_current_hour_tick_night_mode);
@@ -129,6 +144,7 @@ public class SettingsFragment extends PreferenceFragment
         final int defaultNightModeMinutes = mContext.getColor(R.color.default_minute_text_night_mode);
         final int defaultNightModeBackground = mContext.getColor(R.color.default_background_night_mode);
         final int defaultNightModeComplications = mContext.getColor(R.color.default_complications_night_mode);
+        final int defaultNightModeHourText = mContext.getColor(R.color.default_current_hour_tick_night_mode);
 
         switch (preference.getKey()) {
             case "settings_top_complication":
@@ -199,6 +215,39 @@ public class SettingsFragment extends PreferenceFragment
                         defaultNightModeBackground, BACKGROUND_NIGHT_MODE_COLOR_REQ);
                 break;
 
+            case "settings_show_orbiting_hour":
+                mShowOrbitingHour = getPreferenceScreen().getSharedPreferences()
+                        .getBoolean("settings_show_orbiting_hour", false);
+                findPreference("settings_hour_text_color").setEnabled(mShowOrbitingHour);
+
+                if (!mShowOrbitingHour) {
+                    mHourTextColor = getPreferenceScreen().getSharedPreferences()
+                            .getString("settings_hour_text_color",
+                                    getString(R.string.settings_white));
+
+                    boolean committed = editor.remove("settings_hour_text_color").commit();
+                    if (committed) {
+                        editor.putString("settings_hour_text_color",
+                                getString(R.string.settings_white));
+                    }
+                } else {
+                    if (!mHourTextColor.equals(getString(R.string.settings_white))) {
+                        editor.putString("settings_hour_text_color", mHourTextColor).commit();
+                    }
+                }
+                break;
+
+            case "settings_hour_text_color":
+                createColorPreferenceActivityIntent(mContext, "settings_hour_text_color_value",
+                        defaultHourText, HOUR_TEXT_COLOR_REQ);
+                break;
+
+            case "settings_hour_text_night_mode_color":
+                createColorPreferenceActivityIntent(mContext,
+                        "settings_hour_text_night_mode_color",
+                        defaultNightModeHourText, HOUR_TEXT_NIGHT_MODE_COLOR_REQ);
+                break;
+
             case "settings_night_mode_enabled":
                 //If auto night mode is enabled, disable manual night mode
                 mAutoNightModeEnabled = getPreferenceScreen().getSharedPreferences()
@@ -238,12 +287,16 @@ public class SettingsFragment extends PreferenceFragment
                 editor.putString("settings_background_color", getString(R.string.settings_black));
                 editor.putInt("settings_background_color_value", defaultBackground);
 
+                editor.putString("settings_hour_text_color", getString(R.string.settings_white));
+                editor.putInt("settings_hour_text_color_value", defaultHour);
+
                 editor.apply();
                 setSummary("settings_complication_color");
                 setSummary("settings_hour_tick_color");
                 setSummary("settings_tick_color");
                 setSummary("settings_minute_text_color");
                 setSummary("settings_background_color");
+                setSummary("settings_hour_text_color");
 
                 Toast.makeText(mContext,
                         getString(R.string.settings_confirmation_colors_reset_toast),
@@ -266,12 +319,16 @@ public class SettingsFragment extends PreferenceFragment
                 editor.putString("settings_background_night_mode_color", getString(R.string.settings_black));
                 editor.putInt("settings_background_night_mode_color_value", defaultNightModeBackground);
 
+                editor.putString("settings_hour_text_night_mode_color", getString(R.string.settings_default_color));
+                editor.putInt("settings_hour_text_night_mode_color_value", defaultNightModeHour);
+
                 editor.apply();
                 setSummary("settings_complication_night_mode_color");
                 setSummary("settings_hour_tick_night_mode_color");
                 setSummary("settings_tick_night_mode_color");
                 setSummary("settings_minute_text_night_mode_color");
                 setSummary("settings_background_night_mode_color");
+                setSummary("settings_hour_text_night_mode_color");
 
                 Toast.makeText(mContext,
                         getString(R.string.settings_confirmation_night_mode_reset_toast),
@@ -365,6 +422,14 @@ public class SettingsFragment extends PreferenceFragment
 
                 case BACKGROUND_NIGHT_MODE_COLOR_REQ:
                     handleActivityOnResult(editor, data, "settings_background_night_mode_color");
+                    break;
+
+                case HOUR_TEXT_COLOR_REQ:
+                    handleActivityOnResult(editor, data, "settings_hour_text_color");
+                    break;
+
+                case HOUR_TEXT_NIGHT_MODE_COLOR_REQ:
+                    handleActivityOnResult(editor, data, "settings_hour_text_night_mode_color");
                     break;
 
                 case COMPLICATION_COLOR_REQ:
