@@ -411,9 +411,15 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         private void drawOrbitingHour(Canvas canvas) {
             final int currentHour = android.text.format.DateFormat.is24HourFormat(mContext)
                     ? mCalendar.get(Calendar.HOUR_OF_DAY) : mCalendar.get(Calendar.HOUR);
-            final boolean textPosAdjust = currentHour < 9;
-            final String hourString = String.format(Locale.getDefault(),
-                    "%2d", currentHour);
+            final boolean leadingZero = currentHour < 9;
+            String hourString = "";
+            if (leadingZero) {
+                hourString = String.format(Locale.getDefault(),
+                        "%02d", currentHour);
+            } else {
+                hourString = String.format(Locale.getDefault(),
+                        "%02d", currentHour);
+            }
 
             final float seconds = mCalendar.get(Calendar.SECOND)
                     + mCalendar.get(Calendar.MILLISECOND) / 1000f;
@@ -425,10 +431,9 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final float offset = 9.3f;
             final float xPos = Math.round((float) (mCenterX + Math.cos(rads) * (mCenterX - scalePosition(mCenterX, offset))));
             final float yPos = Math.round((float) (mCenterY - Math.sin(rads) * (mCenterY - scalePosition(mCenterY, offset))));
-            final float textXPos = textPosAdjust ? xPos - scalePosition(mCenterX, 81f) : xPos;
 
             canvas.drawCircle(xPos, yPos, mCenterX * 0.16f, mOrbitingHourPaint);
-            canvas.drawText(hourString, textXPos,
+            canvas.drawText(hourString, xPos,
                     yPos - (mOrbitingHourTextPaint.descent()
                             + mOrbitingHourTextPaint.ascent()) / 2, mOrbitingHourTextPaint);
         }
@@ -485,7 +490,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 canvas.drawCircle(xPos, yPos, mCenterX * 0.06f, mNotificationCirclePaint);
                 canvas.drawText(String.valueOf(count), xPos,
                         yPos - (mNotificationTextPaint.descent()
-                                + mNotificationTextPaint.ascent()) / 2, mOrbitingHourTextPaint);
+                                + mNotificationTextPaint.ascent()) / 2, mNotificationTextPaint);
             }
         }
 
