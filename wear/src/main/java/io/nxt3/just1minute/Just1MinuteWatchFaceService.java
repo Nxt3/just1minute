@@ -409,8 +409,15 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
          * @param canvas to draw to
          */
         private void drawOrbitingHour(Canvas canvas) {
-            final int currentHour = android.text.format.DateFormat.is24HourFormat(mContext)
-                    ? mCalendar.get(Calendar.HOUR_OF_DAY) : mCalendar.get(Calendar.HOUR);
+            int currentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+
+            if (!android.text.format.DateFormat.is24HourFormat(mContext)) {
+                currentHour = ((currentHour > 12) ? currentHour % 12 : currentHour);
+                if (currentHour == 0) {
+                    currentHour = 12;
+                }
+            }
+
             final boolean leadingZero = currentHour < 9;
             String hourString = "";
             if (leadingZero) {
