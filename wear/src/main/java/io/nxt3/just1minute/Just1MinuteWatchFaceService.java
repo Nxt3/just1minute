@@ -418,7 +418,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                         "%02d", currentHour);
             } else {
                 hourString = String.format(Locale.getDefault(),
-                        "%02d", currentHour);
+                        "%2d", currentHour);
             }
 
             final float seconds = mCalendar.get(Calendar.SECOND)
