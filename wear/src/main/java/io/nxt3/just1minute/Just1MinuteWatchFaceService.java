@@ -497,7 +497,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 canvas.drawCircle(xPos, yPos, mCenterX * 0.06f, mNotificationCirclePaint);
                 canvas.drawText(String.valueOf(count), xPos,
                         yPos - (mNotificationTextPaint.descent()
-                                + mNotificationTextPaint.ascent()) / 2, mOrbitingHourTextPaint);
+                                + mNotificationTextPaint.ascent()) / 2, mNotificationTextPaint);
             }
         }
 
