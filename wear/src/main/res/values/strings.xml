@@ -19,7 +19,7 @@
     <string name="settings_complication_style_category">Style</string>
 
     <!--Ticks and Text color settings-->
-    <string name="settings_colors_and_font_title">Colors and font</string>
+    <string name="settings_colors_and_font_title">Colors and Style</string>
     <string name="settings_colors_night_mode_title">Colors (Night mode)</string>
     <string name="settings_ticks_category">Ticks</string>
     <string name="settings_hour_tick_color">Current hour tick</string>
