@@ -129,7 +129,6 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
         //Complication stuff
         private SparseArray<ComplicationData> mActiveComplicationDataSparseArray;
         private SparseArray<ComplicationDrawable> mComplicationDrawableSparseArray;
-        private final float COMPLICATION_RADIUS = 8f;
 
         //Fonts
         private Typeface mMinuteTextFont;
@@ -724,16 +723,13 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
          */
         private Rect createComplicationRect(float centerX, float centerY, float desiredRadius) {
             final int radius = Math.round(mCenterX / desiredRadius);
-
             final int centerXInt = Math.round(centerX);
             final int centerYInt = Math.round(centerY);
+            final int recWidth = Math.round(scalePosition(mCenterX, 16f));
 
-            //creates the width to the Rect
-            final int magicNumber = Math.round(scalePosition(mCenterX, 8f));
-
-            return new Rect(centerXInt - radius - magicNumber,
+            return new Rect(centerXInt - radius - recWidth,
                     centerYInt - radius,
-                    centerXInt + radius + magicNumber,
+                    centerXInt + radius + recWidth,
                     centerYInt + radius);
         }
 
@@ -754,7 +750,8 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Below is for measuring the complications
             final float offset = -16f; //offset for complications
-            final Rect topBounds = createComplicationRect(mCenterX, mCenterY / 2 - offset,
+            final float COMPLICATION_RADIUS = 8f;
+            final Rect topBounds = createComplicationRect(mCenterX, mCenterY / 2f - offset,
                     COMPLICATION_RADIUS);
             final Rect bottomBounds = createComplicationRect(mCenterX, mCenterY * 1.5f + offset,
                     COMPLICATION_RADIUS);
