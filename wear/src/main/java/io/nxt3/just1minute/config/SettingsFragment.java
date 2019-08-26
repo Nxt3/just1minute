@@ -153,6 +153,8 @@ public class SettingsFragment extends PreferenceFragment
         switch (preference.getKey()) {
             case "settings_top_complication":
             case "settings_bottom_complication":
+            case "settings_left_complication":
+            case "settings_right_complication":
             case "settings_wallpaper_complication":
                 final int id = extras.getInt("id");
                 startActivityForResult(
@@ -398,6 +400,8 @@ public class SettingsFragment extends PreferenceFragment
                 case 0:
                 case 1:
                 case 2:
+                case 3:
+                case 4:
                     setComplicationSummary(requestCode,
                             data.getParcelableExtra(ProviderChooserIntent.EXTRA_PROVIDER_INFO));
                     break;
@@ -636,6 +640,12 @@ public class SettingsFragment extends PreferenceFragment
                 break;
             case 2:
                 key = "settings_bottom_complication";
+                break;
+            case 3:
+                key = "settings_left_complication";
+                break;
+            case 4:
+                key = "settings_right_complication";
                 break;
             default:
                 return;

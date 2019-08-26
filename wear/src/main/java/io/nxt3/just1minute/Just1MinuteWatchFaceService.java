@@ -57,10 +57,14 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
     private static final int WALLPAPER_COMPLICATION_ID = 0;
     private static final int TOP_COMPLICATION_ID = 1;
     private static final int BOTTOM_COMPLICATION_ID = 2;
+    private static final int LEFT_COMPLICATION_ID = 3;
+    private static final int RIGHT_COMPLICATION_ID = 4;
     public static final int[] COMPLICATION_IDS = {
             WALLPAPER_COMPLICATION_ID,
             TOP_COMPLICATION_ID,
-            BOTTOM_COMPLICATION_ID
+            BOTTOM_COMPLICATION_ID,
+            LEFT_COMPLICATION_ID,
+            RIGHT_COMPLICATION_ID
     };
 
     @Override
@@ -600,7 +604,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                     }
 
                     if (mManualNightModeEnabled) {
-                        final Rect centerBounds = createComplicationRect(mCenterX, mCenterY, 6f);
+                        final Rect centerBounds = createComplicationRect(mCenterX, mCenterY, 6f, false);
 
                         if (centerBounds.contains(x, y)) {
                             mForceNightMode = !mForceNightMode; //toggle the boolean
@@ -721,16 +725,24 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
          * @param desiredRadius radius to use for dividing by the mCenterX coordinate
          * @return the complication rectangle
          */
-        private Rect createComplicationRect(float centerX, float centerY, float desiredRadius) {
+        private Rect createComplicationRect(float centerX, float centerY, float desiredRadius,
+                                            boolean sideComplication) {
             final int radius = Math.round(mCenterX / desiredRadius);
             final int centerXInt = Math.round(centerX);
             final int centerYInt = Math.round(centerY);
             final int recWidth = Math.round(scalePosition(mCenterX, 16f));
 
-            return new Rect(centerXInt - radius - recWidth,
-                    centerYInt - radius,
-                    centerXInt + radius + recWidth,
-                    centerYInt + radius);
+            if (sideComplication) {
+                return new Rect(centerXInt - radius,
+                        centerYInt - radius,
+                        centerXInt + radius,
+                        centerYInt + radius);
+            } else {
+                return new Rect(centerXInt - radius - recWidth,
+                        centerYInt - radius,
+                        centerXInt + radius + recWidth,
+                        centerYInt + radius);
+            }
         }
 
         @Override
@@ -750,11 +762,17 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
 
             //Below is for measuring the complications
             final float offset = -16f; //offset for complications
+            final float leftRightOffset = 10f;
             final float COMPLICATION_RADIUS = 8f;
+            final float SIDE_COMPLICATION_RADIUS = 8f;
             final Rect topBounds = createComplicationRect(mCenterX, mCenterY / 2f - offset,
-                    COMPLICATION_RADIUS);
+                    COMPLICATION_RADIUS, false);
             final Rect bottomBounds = createComplicationRect(mCenterX, mCenterY * 1.5f + offset,
-                    COMPLICATION_RADIUS);
+                    COMPLICATION_RADIUS, false);
+            final Rect leftBounds = createComplicationRect(mCenterX / 2f - offset - leftRightOffset,
+                    mCenterY, SIDE_COMPLICATION_RADIUS, true);
+            final Rect rightBounds = createComplicationRect(mCenterX * 1.5f + offset + leftRightOffset,
+                    mCenterY, SIDE_COMPLICATION_RADIUS, true);
 
             final ComplicationDrawable topComplicationDrawable =
                     mComplicationDrawableSparseArray.get(TOP_COMPLICATION_ID);
@@ -763,6 +781,14 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
             final ComplicationDrawable bottomComplicationDrawable =
                     mComplicationDrawableSparseArray.get(BOTTOM_COMPLICATION_ID);
             bottomComplicationDrawable.setBounds(bottomBounds);
+
+            final ComplicationDrawable leftComplicationDrawable =
+                    mComplicationDrawableSparseArray.get(LEFT_COMPLICATION_ID);
+            leftComplicationDrawable.setBounds(leftBounds);
+
+            final ComplicationDrawable rightComplicationDrawable =
+                    mComplicationDrawableSparseArray.get(RIGHT_COMPLICATION_ID);
+            rightComplicationDrawable.setBounds(rightBounds);
 
             final ComplicationDrawable wallpaperComplicationDrawable =
                     mComplicationDrawableSparseArray.get(WALLPAPER_COMPLICATION_ID);

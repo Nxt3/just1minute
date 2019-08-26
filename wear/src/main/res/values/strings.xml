@@ -11,6 +11,8 @@
     <string name="settings_complication_data_category">Data</string>
     <string name="settings_top_complication">Top</string>
     <string name="settings_bottom_complication">Bottom</string>
+    <string name="settings_left_complication">Left</string>
+    <string name="settings_right_complication">Right</string>
     <string name="settings_wallpaper_complication">Wallpaper</string>
     <string name="settings_draw_border_complications">Draw border</string>
     <string name="settings_empty">Empty</string>
