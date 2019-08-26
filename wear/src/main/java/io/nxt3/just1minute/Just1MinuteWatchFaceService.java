@@ -418,7 +418,7 @@ public class Just1MinuteWatchFaceService extends CanvasWatchFaceService {
                 }
             }
 
-            final boolean leadingZero = currentHour < 9;
+            final boolean leadingZero = currentHour < 10;
             String hourString = "";
             if (leadingZero) {
                 hourString = String.format(Locale.getDefault(),
